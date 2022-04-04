@@ -1,0 +1,22 @@
+.dashboard {
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    flex-direction: column;
+}
+.dashboard-page {
+    background-color: #32c5d2 !important;
+    color: #fff;
+}
+.dashboard-post{
+    background-color: #8e44ad !important;
+    color: #fff;
+}
+.dashboard-user {
+    background-color: #e7505a !important;
+    color: #fff;
+}
+.dashboard-visitor {
+    background-color: #3598dc !important;
+    color: #fff;
+}
