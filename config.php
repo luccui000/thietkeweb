@@ -12,7 +12,7 @@ if(!defined('DB_NAME'))
 
 // config base app
 if(!defined('base_url'))
-    define('BASE_URL','http://dulichtravinh.local/');
+    define('BASE_URL','http://dulichtravinh.com/');
 if(!defined('base_app'))
     define('BASE_APP', str_replace('\\','/',__DIR__).'/' );
 
