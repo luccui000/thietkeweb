@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once "helpers.php";
 require_once "config.php";
 
@@ -15,13 +17,19 @@ function createConnection() {
 function printError($message) {
     echo "<small class='text-danger'>" . $message . "</small>";
 }
-function getLang() {
-    if(isset($_GET['lang'])) {
-        if(isset($_SESSION['lang']) && $_GET['lang'] === 'vi') {
-            $_SESSION['lang'] = 'en';
-        } else {
-            $_SESSION['lang'] = 'vi';
-        }
+if(isset($_GET['lang'])) {
+    if(isset($_SESSION['lang']) && $_GET['lang'] === 'vi') {
+        $_SESSION['lang'] = 'en';
+    } else {
+        $_SESSION['lang'] = 'vi';
     }
-    return $_SESSION['lang'];
+}
+
+$slugUrl = trim($_SERVER['PHP_SELF'], '/');
+
+if(substr($slugUrl, 0, 5) == 'admin') {
+    // check session, if does not have session, it return the login page
+    if(!isset($_SESSION[SESSION_AUTH_NAME]) && $slugUrl != 'admin/auth/login.php') {
+        header("Location: /admin/auth/login.php");
+    }
 }

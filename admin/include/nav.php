@@ -15,6 +15,7 @@
         cursor: pointer;
     }
 </style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand text-uppercase font-weight-bold" href="#">.TraVinh</a>
     <div style="margin-left: 125px">
@@ -29,11 +30,19 @@
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">
-                    <span>Hello, <b>Admin</b></span>
+                    <span>
+                        Hello,
+                        <b>
+                            <?php
+                            if(isset($_SESSION[SESSION_AUTH_NAME]))
+                                echo $_SESSION[SESSION_AUTH_NAME];
+                            ?>
+                        </b>
+                    </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" >
                     <a class="dropdown-item" href="#">Tài khoản</a>
-                    <a class="dropdown-item" href="#">Đăng xuất</a>
+                    <a class="dropdown-item" href="<?php echo url('/admin/auth/logout.php') ?>">Đăng xuất</a>
                 </div>
             </li>
         </ul>
