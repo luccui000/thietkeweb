@@ -38,9 +38,9 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Đăng nhập quản trị viên</title>
-    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../assets/css/app.css" />
-    <link rel="stylesheet" href="../../assets/css/auth.css" />
+    <link rel="stylesheet" href="<?php echo url('assets/css/bootstrap.min.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo url('assets/css/app.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo url('assets/css/auth.css'); ?>" />
 </head>
 <body style="background-image: url(<?php echo url('assets/images/auth/bg.jpg'); ?>);">
     <div class="container-bg">
@@ -49,7 +49,7 @@
                 <div class="col-8"></div>
                 <div class="col-4 main-form pt-4" >
                     <form class="form" action="login.php" method="POST">
-                        <h4 class="text-uppercase font-weight-bold">Đăng nhập</h4>
+                        <h4 class="text-uppercase font-weight-bold mb-2">Đăng nhập</h4>
                         <div class="form-group mt-2">
                             <label for="TenDangNhap">Tên đăng nhập</label>
                             <input name="TenDangNhap" value="admin" class="form-control-custom w-100"  type="text" />
@@ -66,15 +66,9 @@
                                     printError($errors['MatKhau']['Required']);
                             ?>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-4">
                             <div class="col-12">
-                                <button class="btn btn-login">Đăng nhập</button>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row mt-2">
-                            <div class="col-12">
-                                <div class="btn btn-danger btn-block w-100">Đăng nhập với Google</div>
+                                <button class="btn btn-login btn-block">Đăng nhập</button>
                             </div>
                         </div>
                     </form>

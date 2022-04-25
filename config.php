@@ -2,13 +2,13 @@
 
 // Config for database
 if(!defined('HOSTNAME'))
-    define('HOSTNAME', 'sql6.freemysqlhosting.net');
+    define('HOSTNAME', 'localhost');
 if(!defined('USERNAME'))
-    define('USERNAME', 'sql6483851');
+    define('USERNAME', 'root');
 if(!defined('PASSWORD'))
-    define('PASSWORD', 'xUHqXNEgld');
+    define('PASSWORD', 'Pass@123');
 if(!defined('DB_NAME'))
-    define('DB_NAME', 'sql6483851');
+    define('DB_NAME', 'dulichtravinh');
 
 // config base app
 if(!defined('base_url'))

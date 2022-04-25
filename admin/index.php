@@ -21,27 +21,35 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-3">
-                            <div class="dashboard card p-3 dashboard-page">
-                                <h2>5</h2>
-                                <p>Trang</p>
+                            <div class="dashboard card p-3 wave wave-animate-slower wave-danger">
+                                <div class="card-body">
+                                    <h2>5</h2>
+                                    <p>Trang</p>
+                                </div>
                             </div>
                         </div>
                         <div class="col-3">
-                            <div class="dashboard card p-3 dashboard-post">
-                                <h2>1</h2>
-                                <p>Bài viết</p>
+                            <div class="dashboard card p-3 wave wave-animate-slow wave-success">
+                                <div class="card-body">
+                                    <h2>1</h2>
+                                    <p>Bài viết</p>
+                                </div>
                             </div>
                         </div>
                         <div class="col-3">
-                            <div class="dashboard card p-3 dashboard-user">
-                                <h2>4</h2>
-                                <p>Người dùng</p>
+                            <div class="dashboard card p-3 wave wave-animate-fast wave-info">
+                                <div class="card-body">
+                                    <h2>4</h2>
+                                    <p>Người dùng</p>
+                                </div>
                             </div>
                         </div>
                         <div class="col-3">
-                            <div class="dashboard card p-3 dashboard-visitor">
-                                <h2>8</h2>
-                                <p>Khách ghé trong ngày</p>
+                            <div class="dashboard card p-3  wave wave-animate-faster wave-dark">
+                                <div class="card-body">
+                                    <h2>8</h2>
+                                    <p>Khách ghé trong ngày</p>
+                                </div>
                             </div>
                         </div>
                     </div>

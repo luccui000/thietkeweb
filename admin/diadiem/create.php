@@ -148,7 +148,7 @@ require_once "../../connect.php";
                                         $query = "SELECT Id, DuongDan FROM HinhAnh";
                                         $result = $conn->query($query);
                                         $rows = [];
-                                    $rows = getHinhAnh($result, $rows);
+                                        $rows = getHinhAnh($result, $rows);
                                     ?>
                                     <div class="row">
 
