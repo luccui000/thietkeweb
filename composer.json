@@ -1,0 +1,17 @@
+{
+    "name": "luccui/dulichtravinh.local",
+    "autoload": {
+        "psr-4": {
+            "Luccui\\DulichtravinhLocal\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "luccui000",
+            "email": "luccui2k@gmail.com"
+        }
+    ],
+    "require": {
+        "google/apiclient": "^2.12"
+    }
+}
