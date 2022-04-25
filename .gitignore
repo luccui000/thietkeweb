@@ -1,2 +1,4 @@
 env.php
 Upload/images/*
+/vendor/
+config.php
