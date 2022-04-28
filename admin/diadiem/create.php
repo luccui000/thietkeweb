@@ -1,29 +1,66 @@
-<?php
-require_once "../../connect.php";
-?>
+<?php require_once "../../connect.php"; ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <?php include '../include/link.php' ?>
+    <title>Thêm mới địa điểm</title>
+    <?php include base_app('admin/include/link.php') ?>
+    <?php include base_app('admin/include/script.php') ?>
     <style>
-        .preview-img {
-
+        .ck-editor__editable {
+            min-height: 300px;
+        }
+        .preview {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            position: relative;
+            object-fit: cover;
+            object-position: left;
+            border-radius: 4px;
+        }
+        .preview-remove {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .open-hinhanh {
+            color: #0d6efd;
+            cursor: pointer;
+            border: 1px solid transparent;
+            background-color: #fff;
+        }
+        .preinsert {
+            width: 100%;
+            height: 200px;
+        }
+        .media-name {
+            margin-bottom: 1rem;
+        }
+        .media-name p{
+            margin-bottom: 0;
+            font-weight: bold;
         }
     </style>
 <body>
 <div>
-    <?php include "../utils/helpers.php"; ?>
-    <?php include '../include/nav.php' ?>
+    <?php require base_app('admin/utils/helpers.php') ?>
+    <?php include base_app('admin/include/nav.php') ?>
     <div class="page-container mt-2">
         <div class="page-sidebar">
-            <?php include '../include/aside.php' ?>
+            <?php include base_app('admin/include/aside.php') ?>
         </div>
         <div class="page-content">
-            <form action="<?php echo url('admin/diadiem/process.create.php'); ?>" method="POST">
+            <form action="<?php url('admin/diadiem/process.create.php'); ?>" method="POST">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-9">
@@ -40,12 +77,20 @@ require_once "../../connect.php";
                                                 <label for="TenDiaDiemTiengAnh">Tên địa điểm (bản tiếng anh)</label>
                                                 <input name="TenDiaDiemTiengAnh" type="text" class="form-control" placeholder="Tên địa điểm (bản tiếng anh)" id="TenDiaDiemTiengAnh">
                                             </div>
+                                            <div class="form-group">
+                                                <label for="MoTaNgan">Mô tả ngắn</label>
+                                                <textarea name="MoTaNgan" id="MoTaNgan" class="form-control" placeholder="Mô tả ngắn" ></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="MoTaNganTiengAnh">Mô tả ngắn (bản tiếng anh)</label>
+                                                <textarea name="MoTaNganTiengAnh" id="MoTaNganTiengAnh" class="form-control" placeholder="Mô tả ngắn" ></textarea>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group position-relative">
                                                         <label for="">Nhập link iframe</label>
                                                         <textarea id="Iframe" name="Iframe" class="form-control" cols="30" rows="10"></textarea>
-                                                        <button type="button" class="btn position-absolute" style="top: 30px; right: 0px;" data-toggle="modal" data-target="#helpGetIframe" >
+                                                        <button type="button" class="btn position-absolute" data-toggle="modal" data-target="#helpGetIframe" style="top: 30px; right: 0px;" >
                                                             <i class="fa fa-circle-question"></i>
                                                         </button>
                                                     </div>
@@ -77,7 +122,7 @@ require_once "../../connect.php";
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label for="">Mô tả địa điểm</label>
-                                                        <textarea name="MoTa" id="MoTa" class="form-control"  cols="30" rows="10"></textarea>
+                                                        <textarea name="MoTa" id="MoTa" class="form-control editor"  cols="30" rows="10"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,13 +130,8 @@ require_once "../../connect.php";
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label for="">Mô tả địa điểm (bản tiếng anh)</label>
-                                                        <textarea name="MoTaTiengAnh" class="form-control" id="MoTaTiengAnh" cols="30" rows="10"></textarea>
+                                                        <textarea name="MoTaTiengAnh" class="form-control editor" id="MoTaTiengAnh" cols="30" rows="10"></textarea>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div id="googlemaps-iframe"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,13 +158,15 @@ require_once "../../connect.php";
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <input name="HinhAnhId" id="HinhAnhId" hidden value="" />
-                                                    <button class="select-image btn btn-primary" type="button" data-toggle="modal" data-target="#setImageThumbnail">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
                                                     <div class="preview">
-                                                        <img class="w-100 h-100 rounded mt-2 preview-img" src="" alt="">
+                                                        <button type="button" class="preview-remove">
+                                                            <i class="fa fa-close"></i>
+                                                        </button>
                                                     </div>
+                                                    <input name="HinhAnhId" hidden value="" />
+                                                    <button type="button" class="open-hinhanh" data-toggle="modal" data-target="#setImageThumbnail">
+                                                        Launch demo modal
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +176,7 @@ require_once "../../connect.php";
                         </div>
                     </div>
                     <div class="modal fade" id="setImageThumbnail" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-dialog modal-custom" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Chọn ảnh thumbnail</h5>
@@ -142,17 +184,56 @@ require_once "../../connect.php";
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <?php
-                                        $conn = createConnection();
-                                        $query = "SELECT Id, DuongDan FROM HinhAnh";
-                                        $result = $conn->query($query);
-                                        $rows = [];
-                                        $rows = getHinhAnh($result, $rows);
-                                    ?>
+                                <div class="modal-body mx-auto">
                                     <div class="row">
-
+                                        <div class="col-9" style="max-height: 90%; overflow-y: scroll">
+                                            <?php
+                                                require base_app("Classes/HinhAnh.php");
+                                                $result = (new HinhAnh())->getForModal();
+                                                if($result->num_rows > 0) {
+                                                    $hinhanhs = [];
+                                                    while ($row = $result->fetch_array()) {
+                                                        array_push($hinhanhs, $row);
+                                                    }
+                                                    $hinhanhs = array_chunk($hinhanhs, 4);
+                                                    foreach ($hinhanhs as $parent) {
+                                                        echo "<div class='row'>";
+                                                        foreach ($parent as $child) {
+                                                            echo "<div class='col-". 12 / HinhAnh::ITEM_IN_ROW ." mt-2 cursor-pointer'>";
+                                                            echo    "<div class='card'>";
+                                                            echo        "<img class='w-100 rounded hinhanh' style='height: 155px'";
+                                                            echo            "src='". $child["DuongDan"] ."'";
+                                                            echo            "alt='". $child["TenHinhAnh"] ."'";
+                                                            echo            "data-id='". $child["Id"] ."'";
+                                                            echo            "data-tenhinhanh='". $child["TenHinhAnh"] ."'";
+                                                            echo            "data-duongdan='". $child["DuongDan"] ."'";
+                                                            echo            "data-ngaytao='". $child["NgayTao"] ."'";
+                                                            echo            "data-nguoitaoid='". $child["NguoiTaoId"] ."'";
+                                                            echo            "data-hotennguoitao='". $child["HoTenNguoiTao"] ."'";
+                                                            echo        ">";
+                                                            echo        "<div class='card-body'>";
+                                                            echo            "<div class='card-text text-center'>" . $child["Id"] . "</div>";
+                                                            echo        "</div>";
+                                                            echo    "</div>";
+                                                            echo "</div>";
+                                                        }
+                                                        echo "</div>";
+                                                    }
+                                                }
+                                            ?>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="preinsert"></div>
+                                                    <div class="image-detail"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-secondary">Chọn</button>
                                 </div>
                             </div>
                         </div>
@@ -186,82 +267,60 @@ require_once "../../connect.php";
         </div>
     </div>
 </div>
-<?php include '../include/script.php' ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
 <script>
     $(document).ready(function() {
         let editors = [];
-        const DEBOUND_AJAX_TIMER = 500;
-        const images = document.querySelectorAll(".hinhanh");
-        createEditor('#MoTa', '')
-        createEditor('#MoTaTiengAnh', '')
-
-        $("#btnDichBai").click(handleDichDiaDiem)
-        images.forEach(image => image.addEventListener("click", handleSetImageThumbnail));
-        $("#Iframe").keyup(window.deboundAjax(handleGetGeoGraphicIframe, DEBOUND_AJAX_TIMER))
-
-        function createEditor(elementId, data)  {
-            return ClassicEditor
-                .create(document.querySelector(elementId))
+        let selectedHinhAnhId;
+        document.querySelectorAll(".editor").forEach(editor => {
+            createEditor(editor, 'hello');
+        })
+        document.querySelectorAll(".hinhanh").forEach(hinhanh => {
+            hinhanh.addEventListener("click", function () {
+                const { id, duongdan, tenhinhanh, nguoitaoid, hotennguoitao, ngaytao } = $(hinhanh).data();
+                selectedHinhAnhId = id;
+                // $(".preview").css('background-image', `url(${duongdan})`);
+                $(".preinsert").css('background-image', `url(${duongdan})`);
+                $(".image-detail").empty();
+                $(".image-detail").append(
+                    `<div class="media-name">
+                        <p>Đường dẫn</p>
+                        <div class="input-group mb-3">
+                            <input type="text" id="media-name-duongdan" class="form-control" value="${duongdan}" >
+                            <div class="input-group-append" >
+                                <a class="input-group-text" id="media-name-copy" >
+                                    <i class="fa fa-copy"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media-name">
+                        <p>Tên hình ảnh</p>
+                        <span>${tenhinhanh}</span>
+                    </div>
+                    <div class="media-name">
+                        <p>Người tạo</p>
+                        <span>${hotennguoitao}</span>
+                    </div>
+                    <div class="media-name">
+                        <p>Ngày tạo</p>
+                        <span>${ngaytao}</span>
+                    </div>`
+                );
+                $("input[name=HinhAnhId]").val(id)
+            })
+        })
+        //////
+        function createEditor(element, data)  {
+            ClassicEditor
+                .create(element)
                 .then(editor => {
-                    editors[elementId] = editor;
+                    editors[$(element).attr('name')] = editor;
                     editor.setData(data);
-                    editors[elementId].model.document.on('change:data', function () {
-                        $(elementId).text(editors[elementId].getData())
+                    editors[$(element).attr('name')].model.document.on('change:data', function () {
+                        console.log(editors[$(element).attr('name')].getData())
                     })
-                })
-                .catch(err => console.error(err));
-        }
-        function handleDichDiaDiem() {
-            const translateTenDiaDiem = $.ajax({
-                url: "<?php echo url('admin/services/translate.php') ?>",
-                type: "POST",
-                data: {
-                    text: $("#TenDiaDiem").val()
-                }
-            })
-            const translateMoTa = $.ajax({
-                url: "<?php echo url('admin/services/translate.php') ?>",
-                type: "POST",
-                data: {
-                    text: $(`#MoTa`).val()
-                }
-            })
-            $.when(translateTenDiaDiem, translateMoTa).done(function (res1, res2) {
-                if(res1[1] == 'success') {
-                    $("#TenDiaDiemTiengAnh").val(res1[0]);
-                }
-                if(res2[1] == 'success') {
-                    $("#MoTaTiengAnh").val(res2[0]);
-                }
-            })
-        }
-        function handleGetGeoGraphicIframe() {
-            const iframeVal = $("#Iframe").val();
-            const pattern = /2d\d{1,10}.\d{1,20}!3d\d{1,10}.\d{1,20}/;
-            const reg = new RegExp(pattern);
-            if (iframeVal !== null || iframeVal !== "") {
-                const matches = reg.exec(iframeVal);
-                const splited = matches[0].split('!');
-                if (splited.length > 1) {
-                    const longtitude = splited[0].replace('2d', '');
-                    const latitude = splited[1].replace('3d', '');
-                    $(`#KinhDo`).val(latitude);
-                    $(`#ViDo`).val(longtitude);
-                }
-            }
-        }
-        function handleSetImageThumbnail(e) {
-            let imageSelected = {
-                id: e.target.dataset.id,
-                src: e.target.src
-            };
-            console.log(imageSelected)
-            $("#setImageThumbnail").modal("hide");
-
-            $(".select-image i").css("color", "#fff");
-            $("#HinhAnhId").val(imageSelected.id);
-            $(".preview-img").attr('src', imageSelected.src);
+                }).catch(err => console.error(err));
         }
     })
 </script>

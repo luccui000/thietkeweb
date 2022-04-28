@@ -38,8 +38,7 @@ body {
 .form {
     width: calc(100% - 30px);
     position: absolute;
-    top: 50%;
-    height: 400px;
+    bottom: 200px;
 }
 .btn-login {
     background-color: #3a3a3a;

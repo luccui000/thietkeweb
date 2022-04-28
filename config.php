@@ -19,8 +19,12 @@ if(!defined('base_app'))
 // config common
 if(!defined('PRELOADER_TIME'))
     define('PRELOADER_TIME', 200);
+if(!defined('SESSION_AUTH_ID'))
+    define('SESSION_AUTH_ID', 'id');
 if(!defined('SESSION_AUTH_NAME'))
-    define('SESSION_AUTH_NAME', 'TenDangNhap');
+    define('SESSION_AUTH_NAME', 'ten_dang_nhap');
+if(!defined('SESSION_AUTH_EMAIL'))
+    define('SESSION_AUTH_EMAIL', 'email');
 if(!defined('SESSION_IS_LOGIN_NAME'))
     define('SESSION_IS_LOGIN_NAME', 'is_login');
 

@@ -8,13 +8,14 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <?php include '../include/link.php' ?>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+    <?php include base_app('/admin/include/link.php'); ?>
 <body>
 <div>
-    <?php include '../include/nav.php'; ?>
+    <?php include base_app('admin/include/nav.php'); ?>
     <div class="page-container mt-2">
         <div class="page-sidebar">
-            <?php include '../include/aside.php' ?>
+            <?php include base_app('admin/include/aside.php') ?>
         </div>
         <div class="page-content">
             <div class="container-fluid mt-2">
@@ -27,50 +28,26 @@
                                         <h4 class="">Danh sách địa điểm</h4>
                                     </div>
                                     <div class="col-6 d-flex justify-content-end">
-                                        <a href="<?php echo url('admin/diadiem/create.php'); ?>" class="btn btn-primary">Thêm mới</a>
+                                        <a href="<?php url('admin/diadiem/create.php'); ?>" class="btn btn-primary">Thêm mới</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <table class="table table-bordered">
+                                        <table class="table table-hover" id="table_diadiem">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Hình ảnh</th>
+                                                    <th style="width: 100px">Hình ảnh</th>
                                                     <th>Tên địa điểm</th>
                                                     <th>Địa chỉ</th>
                                                     <th>Ngày tạo</th>
-                                                    <th colspan="2"></th>
+                                                    <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php
-                                                $conn = createConnection();
-                                                $query = "SELECT dd.Id, bddd.TenDiaDiem, bddd.MoTa, dd.HinhAnhId, ha.DuongDan, dd.DiaChi, dd.Iframe, dd.KinhDo, dd.ViDo, dd.NguoiTao, dd.NgayTao
-                                                        FROM DiaDiem as dd, HinhAnh as ha, BanDich_DiaDiem as bddd, BanDich bd
-                                                        WHERE dd.HinhAnhId = ha.Id
-                                                        AND bddd.DiaDiemId = dd.Id
-                                                        AND bddd.BanDichId = bd.Id
-                                                        AND bd.TenBanDich = 'VietNam'";
-                                                $result = $conn->query($query);
-                                                if($result->num_rows > 0) {
-                                                    while($row = $result->fetch_assoc()) {
-                                                        echo "<tr>";
-                                                        echo "<td>{$row['Id']}</td>";
-                                                        echo "<td><img class='img-thumbnail' width='100' height='100' src='". BASE_URL . trim($row['DuongDan'], '/') ."' /></td>";
-                                                        echo "<td>{$row['TenDiaDiem']}</td>";
-                                                        echo "<td>{$row['DiaChi']}</td>";
-                                                        echo "<td>{$row['NgayTao']}</td>";
-                                                        echo "<td>
-                                                            <a href='". url("admin/diadiem/update.php?id={$row['Id']}") ."' class='btn btn-success btn-sm'><i class='fa fa-edit'></i><span>Edit</span></a>
-                                                            <a href='". url("admin/diadiem/delete.php?id={$row['Id']}") ."' class='btn btn-danger btn-sm'><i class='fa fa-trash-alt'></i><span>Delete</span></a>
-                                                            </td>";
-                                                        echo "</tr>";
-                                                    }
-                                                }
-                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -83,6 +60,48 @@
         </div>
     </div>
 </div>
-<?php include '../include/script.php' ?>
+<?php include base_app('admin/include/script.php'); ?>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("table").DataTable({
+            language: {
+                "search": "Tìm kiếm",
+                "lengthMenu": "Hiển thị <span style='margin-right: 10px'></span> _MENU_",
+                "info": `Hiển thị <b>_TOTAL_</b> bản ghi`,
+                "paginate": {
+                    "previous": "<i class='fa fa-arrow-left'></i>",
+                    "next": "<i class='fa fa-arrow-right'></i>",
+                }
+            },
+            ajax: {
+                url: "/api/diadiem/getData.php"
+            },
+            columns: [
+                { data: 'id' },
+                { data: 'hinh_anh' },
+                { data: 'ten_dia_diem' },
+                { data: 'dia_chi' },
+                { data: 'ngay_tao' },
+                { data: 'ho_ten_nguoi_tao' },
+                { data: 'trang_thai' },
+            ],
+            columnDefs: [{
+                targets: 1,
+                render: function(img) {
+                    return `<img width="100" src="${img}" >`
+                }
+            }, {
+                targets: 6,
+                render: function (data) {
+                    return data === "congbo" ?
+                        `<span class="badge badge-success">đã công bố</span>`:
+                        `<span class="badge badge-danger">đang tắt</span>`;
+                }
+            }]
+        });
+    })
+</script>
 </body>
 </html>
