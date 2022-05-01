@@ -16,7 +16,7 @@
         if($flag) {
             $hashedMatKhau = md5($matKhau);
             $conn = createConnection();
-            $query = "SELECT * FROM TaiKhoan WHERE TenDangNhap=? AND MatKhau=? LIMIT 1";
+            $query = "select * from taikhoan where ten_dang_nhap = ? and mat_khau = ? limit 1";
             $stmt = $conn->prepare($query);
 
             $stmt->bind_param("ss", $tenDangNhap, $hashedMatKhau);
@@ -24,7 +24,9 @@
             $result = $stmt->get_result();
             if($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $_SESSION[SESSION_AUTH_NAME] = $row['TenDangNhap'];
+                $_SESSION[SESSION_AUTH_ID] = $row['id'];
+                $_SESSION[SESSION_AUTH_NAME] = $row['ten_dang_nhap'];
+                $_SESSION[SESSION_AUTH_EMAIL] = $row['email'];
                 $_SESSION[SESSION_IS_LOGIN_NAME] = true;
                 header('Location: /admin/index.php');
             }
@@ -38,11 +40,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Đăng nhập quản trị viên</title>
-    <link rel="stylesheet" href="<?php echo url('assets/css/bootstrap.min.css'); ?>" />
-    <link rel="stylesheet" href="<?php echo url('assets/css/app.css'); ?>" />
-    <link rel="stylesheet" href="<?php echo url('assets/css/auth.css'); ?>" />
+    <link rel="stylesheet" href="<?php url('assets/css/bootstrap.min.css'); ?>" />
+    <link rel="stylesheet" href="<?php url('assets/css/app.css'); ?>" />
+    <link rel="stylesheet" href="<?php url('assets/css/auth.css'); ?>" />
 </head>
-<body style="background-image: url(<?php echo url('assets/images/auth/bg.jpg'); ?>);">
+<body style="background-image: url(<?php url('assets/images/auth/bg.jpg'); ?>);">
     <div class="container-bg">
         <div class="container-fluid">
             <div class="row">

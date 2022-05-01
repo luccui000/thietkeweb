@@ -1,0 +1,163 @@
+:root {
+    --line: #1ec6b6;
+}
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+.lichtrinh {
+    position: relative;
+}
+.card {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    width: 500px;
+    padding: 10px;
+    margin: 10px 0;
+    height: 250px;
+    visibility: hidden;
+    animation-name: showStepItem;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+.card1 {
+    position: absolute;
+    top: 350px;
+    left: 1000px;
+    animation-delay: .4s;
+}
+.card2 {
+    position: absolute;
+    top: 800px;
+    left: 170px;
+    animation-delay: 1.6s;
+}
+.card3 {
+    position: absolute;
+    top: 1290px;
+    left: 800px;
+    animation-delay: 2.9s;
+}
+.step {
+    width: 100px;
+    height: 100px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+    border-radius: 50%;
+    position: absolute;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 10px solid var(--line);
+    animation-name: showStepItem;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    visibility: hidden;
+}
+.step1 {
+    top: 420px;
+    right: 712px;
+    animation-delay: 0.8s;
+}
+.step2 {
+    top: 865px;
+    left: -25px;
+    animation-delay: 1.8s;
+}
+.step3 {
+    top: 1350px;
+    left: 1410px;
+    animation-delay: 3.4s;
+}
+@keyframes showStepItem {
+    from {
+        transform: scale(.2);
+        opacity: 0
+    }
+    to {
+        visibility:visible;
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+
+.step-wrapper {
+    margin: 30px;
+    margin-bottom: 200px;
+    position: relative;
+}
+.linestep {
+    text-align: center;
+    max-width: 250px;
+    position: absolute;
+}
+.linestep .num {
+    color: #fff;
+    border-radius: 100px;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    background: #452df8;
+}
+.linestep p {
+    width: 250px;
+    position: absolute;
+    margin-top: 7px;
+    font-weight: 500;
+    line-height: normal;
+    font-size: 18px;
+}
+.linestep p.top {
+    bottom: 50px;
+    left: -110px;
+}
+.linestep p.bottom {
+    left: -110px;
+}
+.linestep p.left {
+    width: 200px;
+    right: 34px;
+    top: -17px;
+}
+.linestep p.right {
+    width: 200px;
+    left: 34px;
+    top: -17px;
+}
+.linestep {
+    visibility: hidden;
+}
+.path {
+    visibility: hidden;
+    stroke: #1ec6b6;
+    stroke-width: 10;
+    fill: none;
+}
+.move-line .path {
+    visibility: visible;
+    stroke-dasharray: 4420;
+    stroke-dashoffset: 4420;
+    animation: moveline 4s linear forwards;
+}
+@keyframes show-step-item {
+    from {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+    to {
+        visibility: visible;
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+@keyframes moveline {
+    to {
+        stroke-dashoffset: 0;
+    }
+}

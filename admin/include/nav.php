@@ -42,7 +42,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" >
                     <a class="dropdown-item" href="#">Tài khoản</a>
-                    <a class="dropdown-item" href="<?php echo url('/admin/auth/logout.php') ?>">Đăng xuất</a>
+                    <a class="dropdown-item" href="<?php url('/admin/auth/logout.php') ?>">Đăng xuất</a>
                 </div>
             </li>
         </ul>

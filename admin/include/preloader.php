@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?php echo url('admin/resources/css/preloader.css'); ?>">
+<link rel="stylesheet" href="<?php url('admin/resources/css/preloader.css'); ?>">
 <div class="preloader">
     <div class="gooey">
         <span class="dot"></span>

@@ -5,17 +5,35 @@ session_start();
 require_once "helpers.php";
 require_once "config.php";
 
-function createConnection() {
-    $conn = new mysqli(HOSTNAME, USERNAME, PASSWORD, DB_NAME);
-    if($conn->connect_error) {
-        die("Không thể kết nối đến CSDL");
+if(!function_exists('createConnection')) {
+    function createConnection() {
+        $conn = new mysqli(HOSTNAME, USERNAME, PASSWORD, DB_NAME);
+        if($conn->connect_error) {
+            die("Không thể kết nối đến CSDL");
+        }
+        mysqli_set_charset($conn, 'UTF8');
+        return $conn;
     }
-    mysqli_set_charset($conn, 'UTF8');
-    return $conn;
 }
-
-function printError($message) {
-    echo "<small class='text-danger'>" . $message . "</small>";
+if(!function_exists('printError')) {
+    function printError($message) {
+        echo "<small class='text-danger'>" . $message . "</small>";
+    }
+}
+if(!function_exists('escape_string')) {
+    function escape_string($value): string
+    {
+        $return = '';
+        for($i = 0; $i < strlen($value); ++$i) {
+            $char = $value[$i];
+            $ord = ord($char);
+            if($char !== "'" && $char !== "\"" && $char !== '\\' && $ord >= 32 && $ord <= 126)
+                $return .= $char;
+            else
+                $return .= '\\x' . dechex($ord);
+        }
+        return $return;
+    }
 }
 if(isset($_GET['lang'])) {
     if(isset($_SESSION['lang']) && $_GET['lang'] === 'vi') {

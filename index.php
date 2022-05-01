@@ -10,12 +10,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Báo cáo  thuc mon | Du lịch Trà Vinh</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,500,700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="<?php echo url('assets/css/bootstrap.css'); ?>" />
-    <link href="<?php echo url('assets/css/style.css'); ?>" rel="stylesheet" />
-    <link href="<?php echo url('assets/css/responsive.css'); ?>" rel="stylesheet" />
+    <link href="<?php url('assets/css/bootstrap.css'); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php url('assets/css/style.css'); ?>" rel="stylesheet" />
+    <link href="<?php url('assets/css/responsive.css'); ?>" rel="stylesheet" />
 </head>
 <body>
-    <?php include_once BASE_APP . "include/preloader.php"; ?>
+    <?php include_once base_app("include/preloader.php"); ?>
     <div class="hero_area">
         <header class="header_section">
             <div class="container-fluid">
@@ -39,11 +39,11 @@
                         </div>
                     </div>
                     <a class="navbar-brand" href="index.html">
-                        <img src="<?php echo url('assets/images/home/logo.png'); ?>" alt="" />
+                        <img src="<?php url('assets/images/home/logo.png'); ?>" alt="" />
                     </a>
                     <div class="user_option">
                         <a href="#">
-                            <img src="<?php echo url('assets/images/home/user-icon.png'); ?>" alt="" />
+                            <img src="<?php url('assets/images/home/user-icon.png'); ?>" alt="" />
                         </a>
                         <form class="form-inline my-2 my-lg-0  mb-3 mb-lg-0">
                             <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
@@ -209,7 +209,7 @@
                             <div class="client_box b-1">
                                 <div class="client-id">
                                     <div class="img-box">
-                                        <img src="<?php echo url('assets/images/home/client-1.jpg'); ?>" alt="" />
+                                        <img src="<?php url('assets/images/home/client-1.jpg'); ?>" alt="" />
                                     </div>
                                     <div class="name">
                                         <h5>
@@ -234,7 +234,7 @@
                             <div class="client_box b2">
                                 <div class="client-id">
                                     <div class="img-box">
-                                        <img src="<?php echo url('assets/images/home/client-2.jpg'); ?>" alt="" />
+                                        <img src="<?php url('assets/images/home/client-2.jpg'); ?>" alt="" />
                                     </div>
                                     <div class="name">
                                         <h5>
@@ -266,7 +266,7 @@
                             <div class="client_box b-1">
                                 <div class="client-id">
                                     <div class="img-box">
-                                        <img src="<?php echo url('assets/images/home/client-1.jpg'); ?>" alt="" />
+                                        <img src="<?php url('assets/images/home/client-1.jpg'); ?>" alt="" />
                                     </div>
                                     <div class="name">
                                         <h5>
@@ -291,7 +291,7 @@
                             <div class="client_box b2">
                                 <div class="client-id">
                                     <div class="img-box">
-                                        <img src="<?php echo url('assets/images/home/client-2.jpg'); ?>" alt="" />
+                                        <img src="<?php url('assets/images/home/client-2.jpg'); ?>" alt="" />
                                     </div>
                                     <div class="name">
                                         <h5>
@@ -323,7 +323,7 @@
                             <div class="client_box b-1">
                                 <div class="client-id">
                                     <div class="img-box">
-                                        <img src="<?php echo url('assets/images/home/client-1.jpg'); ?>" alt="" />
+                                        <img src="<?php url('assets/images/home/client-1.jpg'); ?>" alt="" />
                                     </div>
                                     <div class="name">
                                         <h5>
@@ -348,7 +348,7 @@
                             <div class="client_box b2">
                                 <div class="client-id">
                                     <div class="img-box">
-                                        <img src="<?php echo url('assets/images/home/client-2.jpg'); ?>" alt="" />
+                                        <img src="<?php url('assets/images/home/client-2.jpg'); ?>" alt="" />
                                     </div>
                                     <div class="name">
                                         <h5>
@@ -402,7 +402,7 @@
                     </h2>
                 </div>
                 <div class="info_logo">
-                    <img src="<?php echo url('assets/images/home/logo.png'); ?>" alt="">
+                    <img src="<?php url('assets/images/home/logo.png'); ?>" alt="">
                 </div>
                 <div class="info_top">
                     <div class="info_form">
@@ -415,19 +415,19 @@
                     </div>
                     <div class="social_box">
                         <a href="#">
-                            <img src="<?php echo url('assets/images/home/facebook.png'); ?>" alt="">
+                            <img src="<?php url('assets/images/home/facebook.png'); ?>" alt="">
                         </a>
                         <a href="#">
-                            <img src="<?php echo url('assets/images/home/twitter.png'); ?>" alt="">
+                            <img src="<?php url('assets/images/home/twitter.png'); ?>" alt="">
                         </a>
                         <a href="#">
-                            <img src="<?php echo url('assets/images/home/linkedin.png'); ?>" alt="">
+                            <img src="<?php url('assets/images/home/linkedin.png'); ?>" alt="">
                         </a>
                         <a href="#">
-                            <img src="<?php echo url('assets/images/home/instagram.png'); ?>" alt="">
+                            <img src="<?php url('assets/images/home/instagram.png'); ?>" alt="">
                         </a>
                         <a href="#">
-                            <img src="<?php echo url('assets/images/home/youtube.png'); ?>" alt="">
+                            <img src="<?php url('assets/images/home/youtube.png'); ?>" alt="">
                         </a>
                     </div>
                 </div>

@@ -41,15 +41,15 @@
         <a href="#" class="nav-link nav-toggle sidebar__nav--link ">
             <div class="sidebar__nav--left">
                 <i class="fa fa-pen-to-square"></i>
-                <span>Bài viết</span>
+                <span>Lịch trình</span>
             </div>
             <span class="arrow">
-                    <i class="fa fa-angle-left"></i>
-                </span>
+                <i class="fa fa-angle-left"></i>
+            </span>
         </a>
         <ul class="sub-menu">
             <li class="nav-item">
-                <a href="#" class="nav-link">Sub menu</a>
+                <a href="/admin/lichtrinh/index.php" class="nav-link">Tất cả</a>
             </li>
         </ul>
     </li>

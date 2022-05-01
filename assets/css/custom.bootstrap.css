@@ -32,6 +32,8 @@
 .card-header {
     background-color: #ffffff;
     padding: 10px;
+    color: #1f64a0;
+    font-size: 14px;
 }
 
 .card-body {
@@ -43,7 +45,17 @@
     background-color: #ffffff;
     padding: 10px;
 }
-
+.modal-dialog {
+    margin: 1rem auto;
+}
+.modal-custom {
+    width: 1900px;
+}
+@media (min-width: 1200px) {
+    .modal-custom {
+        max-width: 1600px;
+    }
+}
 .modal-header, .modal-footer {
     padding: 0.5rem 0.5rem;
 }
@@ -66,9 +78,20 @@
     border: 1px solid var(--border-color);
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
 .btn-default:hover {
     background-color: var(--border-color);
 }
+.table tr {
+    height: 30px;
+}
+.table td {
+    vertical-align: middle;
+    padding: 5px 0;
+}
+
 .wave {
     background-color: #f3f6f9;
     overflow: hidden;

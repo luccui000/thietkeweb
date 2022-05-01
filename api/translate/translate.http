@@ -1,0 +1,9 @@
+POST http://dulichtravinh.local/api/translate/index.php
+Content-Type: application/json
+
+{
+  "text": "Xin chào"
+}
+
+###
+
