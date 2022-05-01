@@ -8,7 +8,13 @@
     <title>Thêm mới địa điểm</title>
     <?php include base_app('admin/include/link.php') ?>
     <?php include base_app('admin/include/script.php') ?>
+    <link rel="stylesheet" href="<?php url('/assets/dist/magic-suggest/css/magicsuggest.css') ?>">
     <style>
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
         .ck-editor__editable {
             min-height: 300px;
         }
@@ -50,6 +56,15 @@
             margin-bottom: 0;
             font-weight: bold;
         }
+        .card-active {
+            outline: 2px solid #777777;
+        }
+        .ms-ctn-focus{
+            border-color: #86b7fe;
+            /* outline: 0; */
+            -webkit-box-shadow: none;
+            /* box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6); */
+        }
     </style>
 <body>
 <div>
@@ -71,25 +86,25 @@
                                         <div class="card-body p-2">
                                             <div class="form-group">
                                                 <label for="txtTenDiaDiem">Tên địa điểm</label>
-                                                <input name="TenDiaDiem" class="form-control" type="text" placeholder="Tên địa điểm" id="TenDiaDiem">
+                                                <input name="ten_dia_diem" class="form-control must-translate" type="text" placeholder="Tên địa điểm" id="TenDiaDiem">
                                             </div>
                                             <div class="form-group">
-                                                <label for="TenDiaDiemTiengAnh">Tên địa điểm (bản tiếng anh)</label>
-                                                <input name="TenDiaDiemTiengAnh" type="text" class="form-control" placeholder="Tên địa điểm (bản tiếng anh)" id="TenDiaDiemTiengAnh">
+                                                <label for="ten_dia_diem_tieng_anh">Tên địa điểm (bản tiếng anh)</label>
+                                                <input name="ten_dia_diem_tieng_anh" type="text" class="form-control" placeholder="Tên địa điểm (bản tiếng anh)" id="ten_dia_diem_tieng_anh">
                                             </div>
                                             <div class="form-group">
-                                                <label for="MoTaNgan">Mô tả ngắn</label>
-                                                <textarea name="MoTaNgan" id="MoTaNgan" class="form-control" placeholder="Mô tả ngắn" ></textarea>
+                                                <label for="mo_ta">Mô tả ngắn</label>
+                                                <textarea name="mo_ta" id="mo_ta" class="form-control must-translate" placeholder="Mô tả ngắn" ></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label for="MoTaNganTiengAnh">Mô tả ngắn (bản tiếng anh)</label>
-                                                <textarea name="MoTaNganTiengAnh" id="MoTaNganTiengAnh" class="form-control" placeholder="Mô tả ngắn" ></textarea>
+                                                <label for="mo_ta_tieng_anh">Mô tả ngắn (bản tiếng anh)</label>
+                                                <textarea name="mo_ta_tieng_anh" id="mo_ta_tieng_anh" class="form-control" placeholder="Mô tả ngắn" ></textarea>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group position-relative">
-                                                        <label for="">Nhập link iframe</label>
-                                                        <textarea id="Iframe" name="Iframe" class="form-control" cols="30" rows="10"></textarea>
+                                                        <label for="iframe">Nhập link iframe</label>
+                                                        <textarea id="iframe" name="iframe" class="form-control" cols="30" rows="10"></textarea>
                                                         <button type="button" class="btn position-absolute" data-toggle="modal" data-target="#helpGetIframe" style="top: 30px; right: 0px;" >
                                                             <i class="fa fa-circle-question"></i>
                                                         </button>
@@ -99,38 +114,38 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">Kinh độ</label>
-                                                        <input name="KinhDo" id="KinhDo" class="form-control" >
+                                                        <label for="kinh_do">Kinh độ</label>
+                                                        <input name="kinh_do" id="kinh_do" class="form-control" >
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">Vĩ độ</label>
-                                                        <input name="ViDo" id="ViDo" class="form-control" >
+                                                        <label for="vi_do">Vĩ độ</label>
+                                                        <input name="vi_do" id="vi_do" class="form-control" >
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label for="">Địa chỉ</label>
-                                                        <input name="DiaChi" id="DiaChi" class="form-control" type="text">
+                                                        <label for="dia_chi">Địa chỉ</label>
+                                                        <input name="dia_chi" id="dia_chi" class="form-control" type="text">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label for="">Mô tả địa điểm</label>
-                                                        <textarea name="MoTa" id="MoTa" class="form-control editor"  cols="30" rows="10"></textarea>
+                                                        <label for="noi_dung">Nội dung</label>
+                                                        <textarea name="noi_dung" id="noi_dung" class="form-control must-translate editor"  cols="30" rows="10"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label for="">Mô tả địa điểm (bản tiếng anh)</label>
-                                                        <textarea name="MoTaTiengAnh" class="form-control editor" id="MoTaTiengAnh" cols="30" rows="10"></textarea>
+                                                        <label for="noi_dung_tieng_anh">Nội dung (bản tiếng anh)</label>
+                                                        <textarea name="noi_dung_tieng_anh" class="form-control editor" id="noi_dung_tieng_anh" cols="30" rows="10"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,7 +160,7 @@
                                     <div class="card">
                                         <h5 class="card-header">Hành động</h5>
                                         <div class="card-body">
-                                            <button type="button" id="btnDichBai" class="btn btn-primary">Dịch bài</button>
+                                            <button type="button" id="btn_dich_bai" class="btn btn-primary">Dịch bài</button>
                                             <button id="btnSaveAndContinue" class="btn btn-success">Lưu và tiếp tục</button>
                                         </div>
                                     </div>
@@ -163,11 +178,67 @@
                                                             <i class="fa fa-close"></i>
                                                         </button>
                                                     </div>
-                                                    <input name="HinhAnhId" hidden value="" />
+                                                    <input name="hinhanh" id="inp_hinhanh" hidden value="" />
                                                     <button type="button" class="open-hinhanh" data-toggle="modal" data-target="#setImageThumbnail">
-                                                        Launch demo modal
+                                                        Chọn hình ảnh
                                                     </button>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <h5 class="card-header">Chọn tags</h5>
+                                        <div class="card-body">
+                                            <input type="hidden" name="tags[]" id="inp_tag" >
+                                            <div id="tags"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <h5 class="card-header">Trạng thái</h5>
+                                        <div class="card-body">
+                                            <select name="trang_thai" class="form-control custom-select">
+                                                <?php
+                                                    require_once base_app("Classes/DiaDiem.php");
+                                                    foreach (DiaDiem::TRANG_THAI as $key => $value) {
+                                                        echo "<option value='{$key}'>" . $value ."</option>";
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <h5 class="card-header">Danh mục cho bài viết</h5>
+                                        <div class="card-body">
+                                            <input type="hidden" id="danhmuc" name='danhmuc'>
+                                            <?php
+                                                require_once base_app("Classes/DanhMuc.php");
+                                                $danhmuc = new DanhMuc();
+                                                $result = $danhmuc->hierarchicalTree();
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <h5 class="card-header">Địa điểm nổi bật</h5>
+                                        <div class="card-body">
+                                            <div class="form-check">
+                                                <input name="la_noi_bat" id="la_noi_bat" type="checkbox" value="1" class="form-check-input">
+                                                <label for="la_noi_bat" class="form-check-label">Là nổi bật</label>
                                             </div>
                                         </div>
                                     </div>
@@ -187,40 +258,7 @@
                                 <div class="modal-body mx-auto">
                                     <div class="row">
                                         <div class="col-9" style="max-height: 90%; overflow-y: scroll">
-                                            <?php
-                                                require base_app("Classes/HinhAnh.php");
-                                                $result = (new HinhAnh())->getForModal();
-                                                if($result->num_rows > 0) {
-                                                    $hinhanhs = [];
-                                                    while ($row = $result->fetch_array()) {
-                                                        array_push($hinhanhs, $row);
-                                                    }
-                                                    $hinhanhs = array_chunk($hinhanhs, 4);
-                                                    foreach ($hinhanhs as $parent) {
-                                                        echo "<div class='row'>";
-                                                        foreach ($parent as $child) {
-                                                            echo "<div class='col-". 12 / HinhAnh::ITEM_IN_ROW ." mt-2 cursor-pointer'>";
-                                                            echo    "<div class='card'>";
-                                                            echo        "<img class='w-100 rounded hinhanh' style='height: 155px'";
-                                                            echo            "src='". $child["DuongDan"] ."'";
-                                                            echo            "alt='". $child["TenHinhAnh"] ."'";
-                                                            echo            "data-id='". $child["Id"] ."'";
-                                                            echo            "data-tenhinhanh='". $child["TenHinhAnh"] ."'";
-                                                            echo            "data-duongdan='". $child["DuongDan"] ."'";
-                                                            echo            "data-ngaytao='". $child["NgayTao"] ."'";
-                                                            echo            "data-nguoitaoid='". $child["NguoiTaoId"] ."'";
-                                                            echo            "data-hotennguoitao='". $child["HoTenNguoiTao"] ."'";
-                                                            echo        ">";
-                                                            echo        "<div class='card-body'>";
-                                                            echo            "<div class='card-text text-center'>" . $child["Id"] . "</div>";
-                                                            echo        "</div>";
-                                                            echo    "</div>";
-                                                            echo "</div>";
-                                                        }
-                                                        echo "</div>";
-                                                    }
-                                                }
-                                            ?>
+                                            <?php include_once base_app("/admin/hinhanh/partial/content.php") ?>
                                         </div>
                                         <div class="col-3">
                                             <div class="card">
@@ -233,7 +271,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <button class="btn btn-secondary">Chọn</button>
+                                    <button type="button" class="btn btn-primary float-right btn-insert">Chọn</button>
                                 </div>
                             </div>
                         </div>
@@ -268,46 +306,99 @@
     </div>
 </div>
 <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
+<script src="<?php echo url('/assets/dist/magic-suggest/js/magicsuggest.js'); ?>"></script>
 <script>
     $(document).ready(function() {
+        const textEditors = document.querySelectorAll(".editor");
+        const hinhanhs = document.querySelectorAll(".hinhanh");
+        const btnInsert = document.querySelector(".btn-insert");
+        const danhmucs = document.querySelectorAll(".select-danhmuc");
+        const danhmucPost = document.querySelector("#danhmuc");
+        const btnDichBai = document.querySelector("#btn_dich_bai");
+        const dichTexts = document.querySelectorAll(".must-translate");
         let editors = [];
-        let selectedHinhAnhId;
-        document.querySelectorAll(".editor").forEach(editor => {
+        let selectedData;
+
+        $.get("/api/tag/getData.php", function(response) {
+            if(!response.error) {
+                let tags = $('#tags').magicSuggest({
+                    placeholder: "Chọn tags cho bài viết",
+                    data: response.data,
+                    valueField: "id",
+                    displayField: "ten_tag",
+                    mode: "remote",
+                    render: function(data) {
+                        return `<div data-id='${data.id}'>${data.ten_tag}</div>`
+                    }
+                });
+                $(tags).on('selectionchange', function () {
+                    $("#inp_tag").val(this.getValue());
+                })
+            }
+        })
+        danhmucs.forEach(danhmucInp => {
+            danhmucInp.addEventListener("change", function () {
+                if($(danhmucPost).val() == "") {
+                    $(danhmucPost).val(`[${$(danhmucInp).val()}]`);
+                } else {
+                    let danhmucPostVal = [...eval($(danhmucPost).val())];
+                    const index = danhmucPostVal.indexOf(eval($(danhmucInp).val()));
+                    if(index > -1) {
+                        danhmucPostVal.splice(index, 1);
+                    } else {
+                        danhmucPostVal.push($(danhmucInp).val());
+                    }
+                    $(danhmucPost).val(`[${[...danhmucPostVal]}]`);
+                }
+            })
+        })
+        btnInsert.addEventListener("click", function () {
+            if(selectedData === undefined) {
+                alert("Vui lòng chọn ít nhất 1 hình ảnh")
+            } else {
+                $("#setImageThumbnail").modal("hide");
+                $("#inp_hinhanh").val(selectedData.id);
+                $(".preview").css('background-image', `url(${selectedData.duongdan})`);
+            }
+        })
+        textEditors.forEach(editor => {
             createEditor(editor, 'hello');
         })
-        document.querySelectorAll(".hinhanh").forEach(hinhanh => {
+        hinhanhs.forEach(hinhanh => {
             hinhanh.addEventListener("click", function () {
-                const { id, duongdan, tenhinhanh, nguoitaoid, hotennguoitao, ngaytao } = $(hinhanh).data();
-                selectedHinhAnhId = id;
-                // $(".preview").css('background-image', `url(${duongdan})`);
-                $(".preinsert").css('background-image', `url(${duongdan})`);
-                $(".image-detail").empty();
-                $(".image-detail").append(
-                    `<div class="media-name">
-                        <p>Đường dẫn</p>
-                        <div class="input-group mb-3">
-                            <input type="text" id="media-name-duongdan" class="form-control" value="${duongdan}" >
-                            <div class="input-group-append" >
-                                <a class="input-group-text" id="media-name-copy" >
-                                    <i class="fa fa-copy"></i>
-                                </a>
+                selectImage(hinhanh);
+                if($(hinhanh).data() !== undefined) {
+                    selectedData = $(hinhanh).data();
+                    const { id, duongdan, tenhinhanh, nguoitaoid, hotennguoitao, ngaytao } = $(hinhanh).data();
+                    // $(".preview").css('background-image', `url(${duongdan})`);
+                    $(".preinsert").css('background-image', `url(${duongdan})`);
+                    $(".image-detail").empty();
+                    $(".image-detail").append(
+                        `<div class="media-name">
+                            <p>Đường dẫn</p>
+                            <div class="input-group mb-3">
+                                <input type="text" id="media-name-duongdan" class="form-control" value="${duongdan}" >
+                                <div class="input-group-append" >
+                                    <a class="input-group-text" id="media-name-copy" >
+                                        <i class="fa fa-copy"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="media-name">
-                        <p>Tên hình ảnh</p>
-                        <span>${tenhinhanh}</span>
-                    </div>
-                    <div class="media-name">
-                        <p>Người tạo</p>
-                        <span>${hotennguoitao}</span>
-                    </div>
-                    <div class="media-name">
-                        <p>Ngày tạo</p>
-                        <span>${ngaytao}</span>
-                    </div>`
-                );
-                $("input[name=HinhAnhId]").val(id)
+                        <div class="media-name">
+                            <p>Tên hình ảnh</p>
+                            <span>${tenhinhanh}</span>
+                        </div>
+                        <div class="media-name">
+                            <p>Người tạo</p>
+                            <span>${hotennguoitao}</span>
+                        </div>
+                        <div class="media-name">
+                            <p>Ngày tạo</p>
+                            <span>${ngaytao}</span>
+                        </div>`
+                    );
+                }
             })
         })
         //////
@@ -318,9 +409,46 @@
                     editors[$(element).attr('name')] = editor;
                     editor.setData(data);
                     editors[$(element).attr('name')].model.document.on('change:data', function () {
-                        console.log(editors[$(element).attr('name')].getData())
+                        $(element).val(editors[$(element).attr('name')].getData())
                     })
                 }).catch(err => console.error(err));
+        }
+        function selectImage(element) {
+            document.querySelectorAll(".choose-card").forEach(choose => $(choose).removeClass('card-active'))
+            $(element).parent('div').addClass('card-active');
+        }
+        btnDichBai.addEventListener("click", function () {
+            let translateTexts = [];
+            dichTexts.forEach(text => {
+                let div = document.createElement("div");
+                div.innerHTML = $(text).val();
+                let sanitizedText = div.textContent || div.innerText;
+                translateTexts.push(sanitizedText)
+            })
+            const ajaxTranslateAPIs = translateTexts.map(t => callTranslateApi(t));
+            Promise.all([...ajaxTranslateAPIs]).then(response => {
+                if(!response[0].error) {
+                    $("#ten_dia_diem_tieng_anh").val(response[0].data)
+                }
+                if(!response[1].error) {
+                    $("#mo_ta_tieng_anh").val(response[1].data)
+                }
+                if(!response[2].error) {
+                    $("#noi_dung_tieng_anh").text(response[0].data)
+                    editors['noi_dung_tieng_anh'].setData(response[2].data);
+                }
+            })
+        })
+        function callTranslateApi(input) {
+            let data = { 'text': input };
+            return fetch("/api/translate/translate.php", {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.json())
         }
     })
 </script>

@@ -8,12 +8,21 @@ class BaseModel
     protected string $table;
     protected array $fillable = array();
     protected array $data = array();
+    protected array $hiddenFields = array();
 
     public function __construct()
     {
         $this->conn = createConnection();
+        $this->table = strtolower(get_class($this));
     }
 
+    public function all()
+    {
+
+    }
+    protected function exitstCreatedAtField($value) {
+        return array_key_exists('ngay_tao', array_flip($this->fillable)) && array_key_exists('ngay_tao', $value);
+    }
     public function __set($name, $value)
     {
         if(!in_array($name, $this->fillable)) {
@@ -47,5 +56,15 @@ class BaseModel
     public function __unset($name)
     {
         unset($this->data[$name]);
+    }
+    public function toArray($data): array
+    {
+        $results = [];
+        foreach ($this->fillable as $key) {
+            $results[] = [
+                $key => $data[$key]
+            ];
+        }
+        return $results;
     }
 }

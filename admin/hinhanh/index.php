@@ -16,7 +16,7 @@ require_once "../../connect.php";
             font-weight: bold;
         }
         .card-active {
-            border: 1px solid blue;
+            outline: 2px solid #4f4f4f;
         }
     </style>
 <body>

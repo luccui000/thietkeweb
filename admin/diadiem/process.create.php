@@ -1,60 +1,57 @@
 <?php
 
 require_once "../../connect.php";
+require_once base_app("Classes/DiaDiem.php");
+require_once base_app("Classes/HinhAnh.php");
 
-if(count($_POST) > 0) {
-    $TenDiaDiem = $_POST["TenDiaDiem"];
-    $TenDiaDiemTiengAnh = $_POST["TenDiaDiemTiengAnh"];
-    $Iframe = $_POST["Iframe"];
-    $KinhDo = doubleval($_POST["KinhDo"]);
-    $ViDo = doubleval($_POST["ViDo"]);
-    $DiaChi = $_POST["DiaChi"];
-    $MoTa = $_POST["MoTa"];
-    $MoTaTiengAnh = $_POST["MoTaTiengAnh"];
-    $HinhAnhId = $_POST["HinhAnhId"];
-    $NgayTao = date('Y-m-d');
-    $NguoiTao = 1;
+$danhmuc = $_POST['danhmuc'];
+$danhmuc = str_replace('[', '', $danhmuc);
+$danhmuc = str_replace(']', '', $danhmuc);
+$laNoiBat = isset($_POST['la_noi_bat']) ? 1 : 0;
+$tags = $_POST['tags'];
 
-
-    $query = "INSERT INTO DiaDiem(HinhAnhId, DiaChi, Iframe, KinhDo, ViDo, NgayTao, NguoiTao) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $queryBDDD_VI = "INSERT INTO BanDich_DiaDiem(DiaDiemId, BanDichId, TenDiaDiem, MoTa) VALUES (?, ?, ?, ?)";
-    $queryBDDD_EN = "INSERT INTO BanDich_DiaDiem(DiaDiemId, BanDichId, TenDiaDiem, MoTa) VALUES (?, ?, ?, ?)";
-    $conn = createConnection();
-    $stmt1 = $conn->prepare($query);
-
-    $stmt1->bind_param("isssssi",
-        $HinhAnhId,
-        $DiaChi,
-        $Iframe,
-        $KinhDo,
-        $ViDo,
-        $NgayTao,
-        $NguoiTao //
-    );
-    $stmt1->execute();
-
-    $id = $stmt1->insert_id;
-    $banDichVietNam = 1;
-    $banDichTiengAnh = 2;
-    $stmt2 = $conn->prepare($queryBDDD_VI);
-    $stmt2->bind_param("iiss",
-        $id,
-        $banDichVietNam,
-        $TenDiaDiem,
-        $MoTa
-    );
-    $stmt2->execute();
-    $stmt3 = $conn->prepare($queryBDDD_EN);
-    $stmt3->bind_param("iiss",
-        $id,
-        $banDichTiengAnh,
-        $TenDiaDiemTiengAnh,
-        $MoTaTiengAnh
-    );
-    $stmt3->execute();
-    $stmt1->close();
-    $stmt2->close();
-    $stmt3->close();
-    $conn->close();
-    header("Location: /admin/diadiem/index.php");
+try {
+    $idHinhAnh = (int)$_POST['hinhanh'];
+     $hinhanh = (new HinhAnh())->first($idHinhAnh);
+     if(isset($hinhanh['duong_dan'])) {
+        $diadiem = new DiaDiem();
+        $idDiaDiem = $diadiem->insert([
+            'ten_dia_diem' => $_POST['ten_dia_diem'],
+            'hinh_anh' => $hinhanh['duong_dan'],
+            'mo_ta' => $_POST['mo_ta'],
+            'noi_dung' => $_POST['noi_dung'],
+            'nguoi_tao' => $_SESSION[SESSION_AUTH_ID],
+            'dia_chi' => $_POST['dia_chi'],
+            'iframe' => $_POST['iframe'],
+            'kinh_do' => $_POST['kinh_do'],
+            'vi_do' => $_POST['vi_do'],
+            'trang_thai' => $_POST['trang_thai'],
+            'la_noi_bat' => $laNoiBat
+        ]);
+        if($idDiaDiem > 0) {
+            $diadiem->themDanhMuc(explode(",", $danhmuc));
+            $diadiem->themTag($tags);
+        }
+        $diadiemTiengAnh = new DiaDiem();
+        $idDiaDiemTiengAnh = $diadiemTiengAnh->insert([
+            'ten_dia_diem' => $_POST['ten_dia_diem_tieng_anh'],
+            'hinh_anh' => $hinhanh['duong_dan'],
+            'mo_ta' => $_POST['mo_ta_tieng_anh'],
+            'noi_dung' => $_POST['noi_dung_tieng_anh'],
+            'nguoi_tao' => $_SESSION[SESSION_AUTH_ID],
+            'dia_chi' => $_POST['dia_chi'],
+            'iframe' => $_POST['iframe'],
+            'kinh_do' => $_POST['kinh_do'],
+            'vi_do' => $_POST['vi_do'],
+            'trang_thai' => $_POST['trang_thai'],
+            'la_noi_bat' => $laNoiBat
+        ]);
+        if($idDiaDiemTiengAnh > 0) {
+             $diadiemTiengAnh->themDanhMuc(explode(",", $danhmuc));
+             $diadiemTiengAnh->themTag($tags);
+        }
+        // header("Location: /admin/diadiem/index.php");
+     }
+} catch (Exception $exception) {
+    var_dump($exception);
 }

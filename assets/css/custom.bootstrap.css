@@ -32,6 +32,8 @@
 .card-header {
     background-color: #ffffff;
     padding: 10px;
+    color: #1f64a0;
+    font-size: 14px;
 }
 
 .card-body {
@@ -89,6 +91,7 @@
     vertical-align: middle;
     padding: 5px 0;
 }
+
 .wave {
     background-color: #f3f6f9;
     overflow: hidden;

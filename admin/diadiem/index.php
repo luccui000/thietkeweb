@@ -32,13 +32,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body p-2">
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <table class="table table-hover" id="table_diadiem">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th class="text-center">#</th>
                                                     <th style="width: 100px">Hình ảnh</th>
                                                     <th>Tên địa điểm</th>
                                                     <th>Địa chỉ</th>
@@ -88,6 +88,11 @@
                 { data: 'trang_thai' },
             ],
             columnDefs: [{
+               targets: 0,
+               render: function (data) {
+                   return `<p class="text-center">${data}</p>`;
+               }
+            }, {
                 targets: 1,
                 render: function(img) {
                     return `<img width="100" src="${img}" >`

@@ -51,23 +51,18 @@ class HinhAnh extends BaseModel
 
     public function first($id)
     {
-
+        $result = $this->findById($id);
+        $result->data_seek(0);
+        return $result->fetch_assoc();
     }
     public function find($id)
     {
         return $this->findById($id);
     }
-    protected function findById($id) {
-        $query = "select ha.id, ha.ten_hinh_anh, ha.duong_dan, ha.nguoi_tao as nguoi_tao_id, ha.ngay_tao, tk.ho_ten from hinhanh ha, taikhoan tk where ha.nguoi_tao = tk.id AND ha.id = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $id);
-
-        try {
-            $stmt->execute();
-            return $stmt->get_result();
-        } catch (Exception $ex) {
-            return false;
-        }
+    protected function findById($id)
+    {
+        $query = "select ha.id, ha.ten_hinh_anh, ha.duong_dan, ha.nguoi_tao as nguoi_tao_id, ha.ngay_tao, tk.ho_ten from hinhanh ha, taikhoan tk where ha.nguoi_tao = tk.id AND ha.id= {$id}";
+        return $this->conn->query($query);
     }
     public function destroy($id): bool
     {

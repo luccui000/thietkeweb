@@ -2,6 +2,7 @@
 header('Content-type: application/json');
 require_once "../../connect.php";
 require_once base_app("Classes/DiaDiem.php");
+require_once base_app("Helpers/DateFormat.php");
 
 $result = (new DiaDiem())->all();
 if($result->num_rows > 0) {
@@ -22,7 +23,7 @@ if($result->num_rows > 0) {
             'luot_xem' => $row['luot_xem'],
             'la_noi_bat' => $row['la_noi_bat'],
             'trang_thai' => $row['trang_thai'],
-            'ngay_tao' => date('d/m/Y', strtotime($row['ngay_tao']))
+            'ngay_tao' => DateFormat::format($row['ngay_tao'])
         ]);
     }
     $json = [
