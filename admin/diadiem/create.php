@@ -75,7 +75,7 @@
             <?php include base_app('admin/include/aside.php') ?>
         </div>
         <div class="page-content">
-            <form action="<?php url('admin/diadiem/process.create.php'); ?>" method="POST">
+            <form action="<?php url('admin/diadiem/post.create.php'); ?>" method="POST">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-9">

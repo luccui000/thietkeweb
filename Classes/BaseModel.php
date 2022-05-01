@@ -20,6 +20,39 @@ class BaseModel
     {
 
     }
+    public function insert($data = [])
+    {
+        $query = "insert into {$this->table}(";
+        foreach ($data as $key => $value) {
+            $query .= $key . ",";
+        }
+        if(!$this->exitstCreatedAtField($data)) {
+            $query .= "ngay_tao,";
+        }
+        $query = trim($query, ',');
+        $query .= ") values (";
+        foreach ($data as $key => $value) {
+            if(is_string($value)) {
+                $query .= "'" . $value . "',";
+            } else {
+                $query .= $value . ",";
+            }
+        }
+        if(!$this->exitstCreatedAtField($data)) {
+            $query .= "'" . date("Y/m/d") . "',";
+        }
+        $query = trim($query, ',') . ")";
+        try {
+            if($this->conn->query($query)) {
+                $this->id = $this->conn->insert_id;
+                return $this->conn->insert_id;
+            } else {
+                var_dump($this->conn->error);
+            }
+        } catch (Exception $ex) {
+
+        }
+    }
     protected function exitstCreatedAtField($value) {
         return array_key_exists('ngay_tao', array_flip($this->fillable)) && array_key_exists('ngay_tao', $value);
     }

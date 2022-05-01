@@ -42,4 +42,23 @@ class LichTrinh extends BaseModel
             return [];
         }
     }
+    public function themDanhMuc($danhmucs)
+    {
+        $query = "insert into danhmuc_lichtrinh(danhmuc_id, lichtrinh_id) values ";
+        if(is_array($danhmucs)) {
+            foreach ($danhmucs as $danhmuc) {
+                $query .= "({$this->id}, {$danhmuc}),";
+            }
+        } else {
+            $query .= "({$this->id}, {$danhmucs}),";
+        }
+        $query = trim($query, ",");
+        return $this->conn->query($query);
+    }
+    public function themChiTietLichTrinh($thongtinlichtrinh_id, $thutu)
+    {
+        $query = "insert into chitiet_thongtinlichtrinh(lichtrinh_id, thongtinlichtrinh_id, thu_tu) values ";
+        $query .= "({$this->id}, {$thongtinlichtrinh_id}, {$thutu})";
+        return $this->conn->query($query);
+    }
 }

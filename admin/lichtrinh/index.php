@@ -20,19 +20,28 @@ require_once "../../connect.php";
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-hovered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>#</th>
-                                    <th>#</th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <a href="/admin/lichtrinh/create.php" class="btn btn-primary">Thêm mới</a>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <table class="table table-hovered">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>#</th>
+                                            <th>#</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -41,6 +41,10 @@
     padding-top: 0.5rem;
 }
 
+.modal-title {
+    color: #1f64a0;
+    font-size: 14px;
+}
 .card-footer {
     background-color: #ffffff;
     padding: 10px;

@@ -32,39 +32,6 @@ class DiaDiem extends BaseModel
         $query = "select dd.id, dd.ten_dia_diem, dd.mo_ta, dd.noi_dung, dd.la_noi_bat, dd.luot_xem, dd.trang_thai, dd.hinh_anh, dd.iframe, dd.kinh_do, dd.vi_do, dd.dia_chi, dd.ngay_tao, dd.nguoi_tao as nguoi_tao_id, tk.ho_ten from diadiem dd, taikhoan tk where dd.nguoi_tao = tk.id";
         return $this->conn->query($query);
     }
-    public function insert($data = [])
-    {
-        $query = "insert into {$this->table}(";
-        foreach ($data as $key => $value) {
-            $query .= $key . ",";
-        }
-        if(!$this->exitstCreatedAtField($data)) {
-            $query .= "ngay_tao,";
-        }
-        $query = trim($query, ',');
-        $query .= ") values (";
-        foreach ($data as $key => $value) {
-            if(is_string($value)) {
-                $query .= "'" . $value . "',";
-            } else {
-                $query .= $value . ",";
-            }
-        }
-        if(!$this->exitstCreatedAtField($data)) {
-            $query .= "'" . date("Y/m/d") . "',";
-        }
-        $query = trim($query, ',') . ")";
-        try {
-            if($this->conn->query($query)) {
-                $this->id = $this->conn->insert_id;
-                return $this->conn->insert_id;
-            } else {
-                var_dump($this->conn->error);
-            }
-        } catch (Exception $ex) {
-
-        }
-    }
     public function themDanhMuc($danhmucs)
     {
         $query = "insert into danhmuc_diadiem(danhmuc_id, diadiem_id) values ";
