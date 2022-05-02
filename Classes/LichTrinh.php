@@ -3,6 +3,7 @@
 require_once base_app("Classes/BaseModel.php");
 require_once base_app("Classes/ThongTinLichTrinh.php");
 require_once base_app("Classes/TaiKhoan.php");
+require_once base_app("Classes/DiaDiem.php");
 
 class LichTrinh extends BaseModel
 {
@@ -14,7 +15,8 @@ class LichTrinh extends BaseModel
         'dia_chi_khoi_hanh',
         'nguoi_tao',
         'thu_tu',
-        'trang_thai'
+        'trang_thai',
+        'ngay_tao'
     ];
     public function all()
     {
@@ -32,9 +34,10 @@ class LichTrinh extends BaseModel
                     'thoi_gian_khoi_hanh' => $row['thoi_gian_khoi_hanh'],
                     'dia_chi_khoi_hanh' => $row['dia_chi_khoi_hanh'],
                     'thu_tu' => $row['thu_tu'],
-                    'trang_thai' => $row['trang_thai'],
+                    'trang_thai' => DiaDiem::TRANG_THAI[$row['trang_thai']],
                     'nguoi_tao' => $nguoiTao[0],
-                    'chi_tiet_lich_trinh' => $chiTietLichTrinh
+                    'chi_tiet_lich_trinh' => $chiTietLichTrinh,
+                    'so_luong_chi_tiet_lich_trinh' => count($chiTietLichTrinh)
                 ]);
             }
             return $lichtrinhs;

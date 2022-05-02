@@ -93,6 +93,12 @@ body, input {
     outline: none;
     border-color: var(--green);
 }
+.text-sm {
+    font-size: 13px;
+}
+.text-danger {
+    color: #ff2e2e;
+}
 .btn { 
     margin: 20px 0;
     width: 500px;

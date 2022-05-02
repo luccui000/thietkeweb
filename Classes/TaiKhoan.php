@@ -6,12 +6,13 @@ class TaiKhoan extends BaseModel
 {
     public array $fillable = [
         'id',
-        'ten_dang_nhap',
+        'ten_hien_thi',
         'mat_khau',
         'ho_ten',
         'email',
         'so_dien_thoai',
         'trang_thai',
+        'ngay_tao'
     ];
     protected array $hiddenFields = ['mat_khau'];
 
@@ -35,5 +36,13 @@ class TaiKhoan extends BaseModel
         } else {
             return [];
         }
+    }
+    public function dangKy($data = [])
+    {
+        $this->insert($data);
+    }
+    public function dangNhap($data = [])
+    {
+        $this->where($data);
     }
 }

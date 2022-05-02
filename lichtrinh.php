@@ -41,6 +41,33 @@
                 <p>Chi phí trung bình: <b>100-300k / người</b></p>
             </div>
         </article>
+        <div class="step step4">4</div>
+        <article class="card card4">
+            <div class="card-body">
+                <h3>Bien Ba Dong</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                <p>Thời gian tham quan: <b>3h00</b></p>
+                <p>Chi phí trung bình: <b>100-300k / người</b></p>
+            </div>
+        </article>
+        <div class="step step5">5</div>
+        <article class="card card5">
+            <div class="card-body">
+                <h3>Bien Ba Dong</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                <p>Thời gian tham quan: <b>3h00</b></p>
+                <p>Chi phí trung bình: <b>100-300k / người</b></p>
+            </div>
+        </article>
+        <div class="step step6">6</div>
+        <article class="card card6">
+            <div class="card-body">
+                <h3>Bien Ba Dong</h3>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                <p>Thời gian tham quan: <b>3h00</b></p>
+                <p>Chi phí trung bình: <b>100-300k / người</b></p>
+            </div>
+        </article>
         <svg
                 class="move-line"
                 xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +75,18 @@
                 style="width: 100%; height: 400vh; margin-top: 200px" >
             <path
                     class="path"
-                    d="M0,50 L700,50 A50,50 0 0,1 700,500 L250,500 A50,50 0 1,0 250,950 L1200,950 A50,50 0 0,1 1200,1500"
+                    d="M0,50 L700,50
+                        A50,50 0 0,1 700,500
+                        L250,500
+                        A50,50 0 1,0 250,950
+                        L1200,950
+                        A50,50 0 0,1 1200,1500
+                        L500,1500
+                        A50,50 0 1,0 500,2100
+                        L1300,2100
+                        A50,50 0 0,1 1300,2800
+                        L730,2800
+                        L730,3200"
             >
             </path>
         </svg>
@@ -56,7 +94,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
-            console.log(document.querySelector(".path").getTotalLength())
+            const path = document.querySelector(".path");
+            const pathLength = path.getTotalLength();
+            $(path).css('stroke-dasharray', pathLength)
+            $(path).css('stroke-dashoffset', pathLength)
             $('.btn-start').click( function(){
                 $('.step-wrapper').toggleClass('move-line');
             });

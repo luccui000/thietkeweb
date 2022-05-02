@@ -9,6 +9,7 @@ class BaseModel
     protected array $fillable = array();
     protected array $data = array();
     protected array $hiddenFields = array();
+    protected array $wheres = array();
 
     public function __construct()
     {
@@ -52,6 +53,32 @@ class BaseModel
         } catch (Exception $ex) {
 
         }
+    }
+    public function where($data = [])
+    {
+        $query = "select * from {$this->table} where ";
+        foreach ($data as $key => $value) {
+            if(is_string($value)) {
+                $query .= $key . " = '" . $value . "' AND ";
+            } else {
+                $query .= $key . " = " . $value . " AND ";
+            }
+        }
+        $query = trim($query, "AND ");
+        $result = $this->conn->query($query);
+        if($result->num_rows > 0) {
+            $rows = [];
+            while($row = $result->fetch_assoc()) {
+                array_push($rows, $row);
+            }
+            return $rows;
+        } else {
+            return [];
+        }
+    }
+    public function get()
+    {
+
     }
     protected function exitstCreatedAtField($value) {
         return array_key_exists('ngay_tao', array_flip($this->fillable)) && array_key_exists('ngay_tao', $value);

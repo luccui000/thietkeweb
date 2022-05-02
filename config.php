@@ -22,7 +22,7 @@ if(!defined('PRELOADER_TIME'))
 if(!defined('SESSION_AUTH_ID'))
     define('SESSION_AUTH_ID', 'id');
 if(!defined('SESSION_AUTH_NAME'))
-    define('SESSION_AUTH_NAME', 'ten_dang_nhap');
+    define('SESSION_AUTH_NAME', 'ten_hien_thi');
 if(!defined('SESSION_AUTH_EMAIL'))
     define('SESSION_AUTH_EMAIL', 'email');
 if(!defined('SESSION_IS_LOGIN_NAME'))

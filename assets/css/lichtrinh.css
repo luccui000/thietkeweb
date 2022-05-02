@@ -19,6 +19,19 @@
     animation-name: showStepItem;
     animation-duration: 1s;
     animation-fill-mode: forwards;
+    font-size: 20px;
+}
+.card-body h3 {
+    margin: 0;
+    position: relative;
+}
+.card-body h3:after {
+    position: absolute;
+    content: "";
+    width: 100px;
+    top: 30px;
+    left: 0;
+    border-bottom: 2px solid #3a3a3a;
 }
 .card1 {
     position: absolute;
@@ -37,6 +50,24 @@
     top: 1290px;
     left: 800px;
     animation-delay: 2.9s;
+}
+.card4 {
+    position: absolute;
+    top: 1890px;
+    left: 355px;
+    animation-delay: 3.5s;
+}
+.card5 {
+    position: absolute;
+    top: 2530px;
+    left: 830px;
+    animation-delay: 4.0s;
+}
+.card6 {
+    position: absolute;
+    top: 3130px;
+    left: 830px;
+    animation-delay: 4.0s;
 }
 .step {
     width: 100px;
@@ -69,6 +100,21 @@
 .step3 {
     top: 1350px;
     left: 1410px;
+    animation-delay: 3.4s;
+}
+.step4 {
+    top: 1936px;
+    left: 150px;
+    animation-delay: 4.1s;
+}
+.step5 {
+    top: 2580px;
+    left: 1560px;
+    animation-delay: 4.8s;
+}
+.step6 {
+    top: 3200px;
+    left: 660px;
     animation-delay: 3.4s;
 }
 @keyframes showStepItem {
@@ -141,8 +187,8 @@
 }
 .move-line .path {
     visibility: visible;
-    stroke-dasharray: 4420;
-    stroke-dashoffset: 4420;
+    stroke-dasharray: 5077;
+    stroke-dashoffset: 5077;
     animation: moveline 4s linear forwards;
 }
 @keyframes show-step-item {

@@ -12,10 +12,12 @@ $danh_mucs = $post['danh_mucs'];
 $danh_mucs = str_replace('[', '', $danh_mucs);
 $danh_mucs = str_replace(']', '', $danh_mucs);
 
+$thoi_gian_khoi_hanh = DateTime::createFromFormat("d/m/Y H:i", $post['thoi_gian_khoi_hanh'])
+                        ->format("Y/m/d H:i:s");
 $lichtrinh = new LichTrinh();
 $lichtrinh->insert([
     'ten_lich_trinh' => $post['ten_lich_trinh'],
-    'thoi_gian_khoi_hanh' => $post['thoi_gian_khoi_hanh'],
+    'thoi_gian_khoi_hanh' => $thoi_gian_khoi_hanh,
     'dia_chi_khoi_hanh' => $post['dia_chi_khoi_hanh'],
     'trang_thai' => $post['trang_thai'],
     'nguoi_tao' => 1
@@ -25,12 +27,14 @@ $lichtrinh->themDanhMuc($danh_muc_ids);
 
 foreach ($chi_tiet_lich_trinh as $items) {
     $thuTu = $items["props"]["thu_tu"];
+    $thoi_gian_trung_binh = DateTime::createFromFormat("H:i", $items["props"]['thoi_gian_trung_binh'])
+        ->format("H:i:s");
     $thongTinLichTrinh = new ThongTinLichTrinh();
     $thongTinLichTrinh->insert([
         'ten_ctlt' => $items["props"]["ten_ctlt"],
         'noi_dung' => $items["props"]["noi_dung"],
         'chi_phi_trung_binh' => $items["props"]["chi_phi_trung_binh"],
-        'thoi_gian_trung_binh' => $items["props"]["thoi_gian_trung_binh"]
+        'thoi_gian_trung_binh' => $thoi_gian_trung_binh
     ]);
     $lichtrinh->themChiTietLichTrinh($thongTinLichTrinh->id, $thuTu);
 }
