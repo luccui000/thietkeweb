@@ -57,7 +57,7 @@
         </ul>
     </li>
     <li class="nav-item">
-        <a href="/" class="nav-link nav-toggle sidebar__nav--link">
+        <a href="/admin/taikhoan/index.php" class="nav-link nav-toggle sidebar__nav--link">
             <div class="sidebar__nav--left">
                 <i class="fa fa-cog"></i>
                 <span>Cài đặt</span>

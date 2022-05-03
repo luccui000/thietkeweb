@@ -19,7 +19,8 @@ class BaseModel
 
     public function all()
     {
-
+        $q =  "select * from {$this->table}";
+        return $this->conn->query($q);
     }
     public function insert($data = [])
     {
