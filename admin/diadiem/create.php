@@ -1,4 +1,8 @@
-<?php require_once "../../connect.php"; ?>
+<?php
+    require_once "../../connect.php";
+    require_once base_app("Classes/DiaDiem.php");
+    require_once base_app("Classes/DanhMuc.php");
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -68,8 +72,8 @@
     </style>
 <body>
 <div>
-    <?php require base_app('admin/utils/helpers.php') ?>
-    <?php include base_app('admin/include/nav.php') ?>
+    <?php require_once base_app('admin/utils/helpers.php') ?>
+    <?php include_once base_app('admin/include/nav.php') ?>
     <div class="page-container mt-2">
         <div class="page-sidebar">
             <?php include base_app('admin/include/aside.php') ?>
@@ -206,7 +210,6 @@
                                         <div class="card-body">
                                             <select name="trang_thai" class="form-control custom-select">
                                                 <?php
-                                                    require_once base_app("Classes/DiaDiem.php");
                                                     foreach (DiaDiem::TRANG_THAI as $key => $value) {
                                                         echo "<option value='{$key}'>" . $value ."</option>";
                                                     }
@@ -223,9 +226,7 @@
                                         <div class="card-body">
                                             <input type="hidden" id="danhmuc" name='danhmuc'>
                                             <?php
-                                                require_once base_app("Classes/DanhMuc.php");
-                                                $danhmuc = new DanhMuc();
-                                                $result = $danhmuc->hierarchicalTree();
+                                                (new DanhMuc())->hierarchicalTree();
                                             ?>
                                         </div>
                                     </div>
@@ -316,8 +317,11 @@
         const danhmucPost = document.querySelector("#danhmuc");
         const btnDichBai = document.querySelector("#btn_dich_bai");
         const dichTexts = document.querySelectorAll(".must-translate");
+        const DEBOUND_AJAX_TIMER = 500;
         let editors = [];
         let selectedData;
+
+        $(`#iframe`).keyup(window.deboundAjax(handleGetGeoGraphicIframe, DEBOUND_AJAX_TIMER))
 
         $.get("/api/tag/getData.php", function(response) {
             if(!response.error) {
@@ -449,6 +453,21 @@
                 },
                 body: JSON.stringify(data)
             }).then(response => response.json())
+        }
+        function handleGetGeoGraphicIframe() {
+            const iframeVal = $(`#iframe`).val();
+            const pattern = /2d\d{1,10}.\d{1,20}!3d\d{1,10}.\d{1,20}/;
+            const reg = new RegExp(pattern);
+            if (iframeVal !== null || iframeVal !== "") {
+                const matches = reg.exec(iframeVal);
+                const splited = matches[0].split('!');
+                if (splited.length > 1) {
+                    const longtitude = splited[0].replace('2d', '');
+                    const latitude = splited[1].replace('3d', '');
+                    $(`#kinh_do`).val(latitude);
+                    $(`#vi_do`).val(longtitude);
+                }
+            }
         }
     })
 </script>

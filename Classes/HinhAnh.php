@@ -1,15 +1,11 @@
 <?php
 
 require_once base_app("Classes/BaseModel.php");
+require_once base_app("Classes/TaiKhoan.php");
 
 class HinhAnh extends BaseModel
 {
     public const ITEM_IN_ROW = 6;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     protected array $fillable = [
         'id',
@@ -34,26 +30,40 @@ class HinhAnh extends BaseModel
             $stmt->execute();
             return true;
         } catch (Exception $ex) {
-            var_dump($ex);
             return false;
         }
     }
     public function all()
     {
-        $query = "select ha.id, ha.ten_hinh_anh, ha.duong_dan, ha.nguoi_tao as nguoi_tao_id, ha.ngay_tao, tk.ho_ten from hinhanh ha, taikhoan tk where ha.nguoi_tao = tk.id";
-        return $this->conn->query($query);
+        $query = "select * from {$this->table}";
+        $result = $this->conn->query($query);
+        if($result->num_rows > 0) {
+            $hinhanhs = [];
+            $taikhoan = new TaiKhoan();
+            while ($row = $result->fetch_assoc()) {
+                array_push($hinhanhs, [
+                    'id' => $row['id'],
+                    'ten_hinh_anh' => $row['ten_hinh_anh'],
+                    'duong_dan' => $row['duong_dan'],
+                    'trang_thai' => $row['trang_thai'],
+                    'nguoi_tao' => $taikhoan->find(!is_null($row['nguoi_tao']) ? $row['nguoi_tao'] : 1),
+                    'ngay_tao' => $row['ngay_tao']
+                ]);
+            }
+            return array_chunk($hinhanhs, HinhAnh::ITEM_IN_ROW);
+        } else {
+            return [];
+        }
     }
     public function getForModal()
     {
-        $query = "select ha.id, ha.duong_dan, ha.nguoi_tao as nguoi_tao_id, ha.ngay_tao, tk.ho_ten from hinhanh ha, taikhoan tk where ha.nguoi_tao = tk.id and ha.trang_thai = 1";
+        $query = "select * from {$this->table} where trang_thai = 1";
         return $this->conn->query($query);
     }
 
     public function first($id)
     {
-        $result = $this->findById($id);
-        $result->data_seek(0);
-        return $result->fetch_assoc();
+        return $this->findById($id)[0];
     }
     public function find($id)
     {
@@ -61,8 +71,25 @@ class HinhAnh extends BaseModel
     }
     protected function findById($id)
     {
-        $query = "select ha.id, ha.ten_hinh_anh, ha.duong_dan, ha.nguoi_tao as nguoi_tao_id, ha.ngay_tao, tk.ho_ten from hinhanh ha, taikhoan tk where ha.nguoi_tao = tk.id AND ha.id= {$id}";
-        return $this->conn->query($query);
+        $query = "select * from {$this->table} where id=" . $id;
+        $result = $this->conn->query($query);
+        if($result->num_rows > 0) {
+            $rows = [];
+            $taikhoan = new TaiKhoan();
+            while($row = $result->fetch_assoc()) {
+                array_push($rows, [
+                    'id' => $row['id'],
+                    'ten_hinh_anh' => $row['ten_hinh_anh'],
+                    'duong_dan' => $row['duong_dan'],
+                    'trang_thai' => $row['trang_thai'],
+                    'nguoi_tao' => $taikhoan->find(!is_null($row['nguoi_tao']) ? $row['nguoi_tao'] : 1),
+                    'ngay_tao' => $row['ngay_tao'],
+                ]);
+            }
+            return $rows;
+        } else {
+            return [];
+        }
     }
     public function destroy($id): bool
     {

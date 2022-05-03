@@ -25,6 +25,9 @@
                 <a href="/admin/danhmuc/index.php" class="nav-link">Danh mục</a>
             </li>
             <li class="nav-item">
+                <a href="/admin/binhluan/index.php" class="nav-link">Bình luận</a>
+            </li>
+            <li class="nav-item">
                 <a href="/admin/diadiem/create.php" class="nav-link">Thêm mới</a>
             </li>
         </ul>

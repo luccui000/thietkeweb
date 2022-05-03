@@ -1,34 +1,34 @@
-<?php require_once "../../connect.php"; ?>
 <?php
-    if(count($_POST) > 0) {
-        $errors = [];
-        $tenDangNhap = trim($_POST['TenDangNhap']);
-        $matKhau = trim($_POST['MatKhau']);
-        $flag = true;
-        if(strlen($tenDangNhap) == 0) {
-            $errors["TenDangNhap"]["Required"] = "Vui lòng nhập tên đăng nhập";
-            $flag = false;
-        }
-        if(strlen($tenDangNhap) == 0) {
-            $errors["MatKhau"]["Required"] = "Vui lòng nhập mật khẩu";
-            $flag = false;
-        }
-        if($flag) {
-            $hashedMatKhau = md5($matKhau);
-            $conn = createConnection();
-            $query = "select * from taikhoan where ten_dang_nhap = ? and mat_khau = ? limit 1";
-            $stmt = $conn->prepare($query);
+    require_once "../../connect.php";
 
-            $stmt->bind_param("ss", $tenDangNhap, $hashedMatKhau);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $_SESSION[SESSION_AUTH_ID] = $row['id'];
-                $_SESSION[SESSION_AUTH_NAME] = $row['ten_dang_nhap'];
-                $_SESSION[SESSION_AUTH_EMAIL] = $row['email'];
+    if(count($_POST) > 0) {
+        $errorBags = [];
+        if(empty($_POST['email'])) {
+            $errorBags['email'] = [
+                'required' => 'Vui lòng nhập vào email'
+            ];
+        }
+        if(empty($_POST['mat_khau'])) {
+            $errorBags['mat_khau'] = [
+                'required' => 'Vui lòng nhập vào mật khẩu'
+            ];
+        }
+        if(count($errorBags) == 0) {
+            require_once base_app("Classes/TaiKhoan.php");
+            $taikhoan = new TaiKhoan();
+            $result = $taikhoan->where([
+                'email' => $_POST['email'],
+                'mat_khau' => md5($_POST['mat_khau'])
+            ]);
+            $isOk = true;
+            if(isset($result[0])) {
+                $_SESSION[SESSION_AUTH_ID] = $result[0]['id'];
+                $_SESSION[SESSION_AUTH_EMAIL] = $result[0]['email'];
+                $_SESSION[SESSION_AUTH_NAME] = $result[0]['ten_hien_thi'];
                 $_SESSION[SESSION_IS_LOGIN_NAME] = true;
-                header('Location: /admin/index.php');
+                header("Location: /admin/index.php");
+            } else {
+                $isOk = false;
             }
         }
     }
@@ -50,22 +50,28 @@
             <div class="row">
                 <div class="col-8"></div>
                 <div class="col-4 main-form pt-4" >
-                    <form class="form" action="login.php" method="POST">
+                    <form class="form" action="/admin/auth/login.php" method="POST">
                         <h4 class="text-uppercase font-weight-bold mb-2">Đăng nhập</h4>
                         <div class="form-group mt-2">
-                            <label for="TenDangNhap">Tên đăng nhập</label>
-                            <input name="TenDangNhap" value="admin" class="form-control-custom w-100"  type="text" />
+                            <label for="email">Tên đăng nhập</label>
+                            <input name="email" value="admin@dulichtravinh.local" class="form-control-custom w-100"  type="text" />
                             <?php
-                                if(isset($errors) && isset($errors['TenDangNhap']['Required']))
-                                    printError($errors['TenDangNhap']['Required']);
+                            if(isset($errorBags) && isset($errorBags['email'])) {
+                                foreach ($errorBags['email'] as $key => $value) {
+                                    echo "<span class='text-sm text-danger'>{$value}</span>";
+                                }
+                            }
                             ?>
                         </div>
                         <div class="form-group mt-2">
-                            <label for="MatKhau">Mật khẩu</label>
-                            <input name="MatKhau" type="password" value="Pass@123" class="form-control-custom w-100">
+                            <label for="mat_khau">Mật khẩu</label>
+                            <input name="mat_khau" type="password" value="Pass@123" class="form-control-custom w-100">
                             <?php
-                                if(isset($errors) && isset($errors['MatKhau']['Required']))
-                                    printError($errors['MatKhau']['Required']);
+                            if(isset($errorBags) && isset($errorBags['mat_khau'])) {
+                                foreach ($errorBags['mat_khau'] as $key => $value) {
+                                    echo "<span class='text-sm text-danger'>{$value}</span>";
+                                }
+                            }
                             ?>
                         </div>
                         <div class="row mt-4">

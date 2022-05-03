@@ -100,7 +100,7 @@ require_once "../../connect.php";
                 {data: 'thoi_gian_khoi_hanh'},
                 {data: 'dia_chi_khoi_hanh'},
                 {data: 'trang_thai'},
-                {data: 'nguoi_tao.ho_ten'},
+                {data: 'nguoi_tao'},
                 {data: 'so_luong_chi_tiet_lich_trinh'},
             ],
             columnDefs: [{
@@ -119,6 +119,11 @@ require_once "../../connect.php";
                             break;
                     }
                     return text;
+                }
+            }, {
+                targets: 5,
+                render: function(data) {
+                    return `<span>${data.ten_hien_thi}</span>`
                 }
             }]
         })

@@ -4,11 +4,16 @@ require_once "../../connect.php";
 require_once base_app("Classes/DiaDiem.php");
 require_once base_app("Classes/HinhAnh.php");
 
+
 $danhmuc = $_POST['danhmuc'];
 $danhmuc = str_replace('[', '', $danhmuc);
 $danhmuc = str_replace(']', '', $danhmuc);
+$danhmucs = explode(",", $danhmuc);
 $laNoiBat = isset($_POST['la_noi_bat']) ? 1 : 0;
 $tags = $_POST['tags'];
+
+if(!isset($_SESSION[SESSION_AUTH_ID]))
+    header("Location: /admin/auth/login.php");
 
 try {
     $idHinhAnh = (int)$_POST['hinhanh'];
@@ -26,10 +31,11 @@ try {
             'kinh_do' => $_POST['kinh_do'],
             'vi_do' => $_POST['vi_do'],
             'trang_thai' => $_POST['trang_thai'],
-            'la_noi_bat' => $laNoiBat
+            'la_noi_bat' => $laNoiBat,
+            'ngon_ngu' => 'vi'
         ]);
         if($idDiaDiem > 0) {
-            $diadiem->themDanhMuc(explode(",", $danhmuc));
+            $diadiem->themDanhMuc($danhmucs);
             $diadiem->themTag($tags);
         }
         $diadiemTiengAnh = new DiaDiem();
@@ -44,13 +50,14 @@ try {
             'kinh_do' => $_POST['kinh_do'],
             'vi_do' => $_POST['vi_do'],
             'trang_thai' => $_POST['trang_thai'],
-            'la_noi_bat' => $laNoiBat
+            'la_noi_bat' => $laNoiBat,
+            'ngon_ngu' => 'en'
         ]);
         if($idDiaDiemTiengAnh > 0) {
              $diadiemTiengAnh->themDanhMuc(explode(",", $danhmuc));
              $diadiemTiengAnh->themTag($tags);
         }
-        // header("Location: /admin/diadiem/index.php");
+        header("Location: /admin/diadiem/index.php");
      }
 } catch (Exception $exception) {
     var_dump($exception);

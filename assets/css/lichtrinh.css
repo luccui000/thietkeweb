@@ -8,13 +8,29 @@
 .lichtrinh {
     position: relative;
 }
+.lichtrinh-start {
+    font-weight: normal;
+}
+.lichtrinh-start b {
+    font-size: 20px;
+}
+.lichtrinh-startaddress {
+    position: absolute;
+    top: 55px;
+    left: 100px;
+}
+.lichtrinh-starttime {
+    position: absolute;
+    top: 20px;
+    left: 100px;
+}
 .card {
     border: 1px solid #ccc;
     border-radius: 2px;
     width: 500px;
     padding: 10px;
     margin: 10px 0;
-    height: 250px;
+    height: 200px;
     visibility: hidden;
     animation-name: showStepItem;
     animation-duration: 1s;
@@ -24,6 +40,10 @@
 .card-body h3 {
     margin: 0;
     position: relative;
+    margin-bottom: 10px;
+}
+.card-body p {
+    margin-bottom: 5px;
 }
 .card-body h3:after {
     position: absolute;
@@ -35,37 +55,37 @@
 }
 .card1 {
     position: absolute;
-    top: 350px;
+    top: 150px;
     left: 1000px;
     animation-delay: .4s;
 }
 .card2 {
     position: absolute;
-    top: 800px;
+    top: 600px;
     left: 170px;
     animation-delay: 1.6s;
 }
 .card3 {
     position: absolute;
-    top: 1290px;
+    top: 1090px;
     left: 800px;
     animation-delay: 2.9s;
 }
 .card4 {
     position: absolute;
-    top: 1890px;
+    top: 1690px;
     left: 355px;
     animation-delay: 3.5s;
 }
 .card5 {
     position: absolute;
-    top: 2530px;
+    top: 2330px;
     left: 830px;
     animation-delay: 4.0s;
 }
 .card6 {
     position: absolute;
-    top: 3130px;
+    top: 2930px;
     left: 830px;
     animation-delay: 4.0s;
 }
@@ -88,32 +108,32 @@
     visibility: hidden;
 }
 .step1 {
-    top: 420px;
-    right: 712px;
+    top: 220px;
+    left: 870px;
     animation-delay: 0.8s;
 }
 .step2 {
-    top: 865px;
+    top: 665px;
     left: -25px;
     animation-delay: 1.8s;
 }
 .step3 {
-    top: 1350px;
+    top: 1150px;
     left: 1410px;
     animation-delay: 3.4s;
 }
 .step4 {
-    top: 1936px;
+    top: 1736px;
     left: 150px;
     animation-delay: 4.1s;
 }
 .step5 {
-    top: 2580px;
-    left: 1560px;
+    top: 2380px;
+    left: 1590px;
     animation-delay: 4.8s;
 }
 .step6 {
-    top: 3200px;
+    top: 3000px;
     left: 660px;
     animation-delay: 3.4s;
 }

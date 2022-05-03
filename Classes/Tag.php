@@ -1,6 +1,7 @@
 <?php
 
 require_once base_app("Classes/BaseModel.php");
+require_once base_app("Classes/TaiKhoan.php");
 
 class Tag extends BaseModel
 {
@@ -14,11 +15,24 @@ class Tag extends BaseModel
     ];
     public function all()
     {
-        $query = "select t.id, t.ten_tag, t.mo_ta, t.trang_thai, t.ngay_tao, tk.id as nguoi_tao_id, tk.ho_ten from tags t, taikhoan tk where t.nguoi_tao = tk.id";
-        return $this->conn->query($query);
-    }
-    public function insert()
-    {
-
+        $query = "select * from {$this->table}s";
+        $result = $this->conn->query($query);
+        if($result->num_rows > 0) {
+            $rows = [];
+            $taikhoan = new TaiKhoan();
+            while($row = $result->fetch_assoc()) {
+                array_push($rows, [
+                    'id' => $row['id'],
+                    'ten_tag' => $row['ten_tag'],
+                    'nguoi_tao' => $taikhoan->find(!is_null($row['nguoi_tao']) ? $row['nguoi_tao'] : 1),
+                    'mo_ta' => $row['mo_ta'],
+                    'ngay_tao' => $row['ngay_tao'],
+                    'trang_thai' => $row['trang_thai']
+                ]);
+            }
+            return $rows;
+        } else {
+            return [];
+        }
     }
 }

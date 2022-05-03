@@ -1,5 +1,5 @@
 <?php
-require "../../connect.php";
+require_once "../../connect.php";
 require_once base_app("Helpers/FileUpload.php");
 require_once base_app("Classes/HinhAnh.php");
 

@@ -84,7 +84,7 @@
                 { data: 'ten_dia_diem' },
                 { data: 'dia_chi' },
                 { data: 'ngay_tao' },
-                { data: 'ho_ten_nguoi_tao' },
+                { data: 'nguoi_tao' },
                 { data: 'trang_thai' },
             ],
             columnDefs: [{
@@ -96,6 +96,12 @@
                 targets: 1,
                 render: function(img) {
                     return `<img width="100" src="${img}" >`
+                }
+            }, {
+                targets: 5,
+                render: function (data) {
+                    console.log(data)
+                    return `<span>${data[0].ten_hien_thi}</span>`;
                 }
             }, {
                 targets: 6,

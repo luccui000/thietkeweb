@@ -7,15 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <?php include './include/link.php' ?>
-    <link rel="stylesheet" href="<?php echo BASE_URL . 'admin/resources/css/dashboard.css'; ?>">
+    <title>Trang quản trị</title>
+    <?php include base_app("/admin/include/link.php") ?>
+    <link rel="stylesheet" href="<?php url('admin/resources/css/dashboard.css') ?>">
 <body>
     <div>
-        <?php include './include/nav.php' ?>
+        <?php include base_app("/admin/include/nav.php") ?>
         <div class="page-container mt-2">
             <div class="page-sidebar">
-                <?php include './include/aside.php' ?>
+                <?php include base_app("/admin/include/aside.php") ?>
             </div>
             <div class="page-content">
                 <div class="container-fluid">
@@ -23,15 +23,23 @@
                         <div class="col-3">
                             <div class="dashboard card p-3 wave wave-animate-slower wave-danger">
                                 <div class="card-body">
-                                    <h2>5</h2>
-                                    <p>Trang</p>
+                                    <?php
+                                        require_once base_app("Classes/GheTham.php");
+                                        $gheTham = new GheTham();
+                                        echo "<h2>" . $gheTham->tongSoLuotTruyCap() . "</h2>";
+                                    ?>
+                                    <p>Tổng số lượt truy cập</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="dashboard card p-3 wave wave-animate-slow wave-success">
                                 <div class="card-body">
-                                    <h2>1</h2>
+                                    <?php
+                                        require_once base_app("Classes/DiaDiem.php");
+                                        $diadiem = new DiaDiem();
+                                        echo "<h2>" .  count($diadiem->all()) . "</h2>";
+                                    ?>
                                     <p>Bài viết</p>
                                 </div>
                             </div>
@@ -39,7 +47,11 @@
                         <div class="col-3">
                             <div class="dashboard card p-3 wave wave-animate-fast wave-info">
                                 <div class="card-body">
-                                    <h2>4</h2>
+                                    <?php
+                                        $connection = createConnection();
+                                        $result = $connection->query("select * from taikhoan");
+                                        echo "<h2>{$result->num_rows}</h2>";
+                                    ?>
                                     <p>Người dùng</p>
                                 </div>
                             </div>
@@ -47,7 +59,9 @@
                         <div class="col-3">
                             <div class="dashboard card p-3  wave wave-animate-faster wave-dark">
                                 <div class="card-body">
-                                    <h2>8</h2>
+                                    <?php
+                                        echo "<h2>" . $gheTham->soKhachGheTrongNgay() . "</h2>";
+                                    ?>
                                     <p>Khách ghé trong ngày</p>
                                 </div>
                             </div>
@@ -75,7 +89,17 @@
                             <div class="card">
                                 <h4 class="card-header">Bài viết gần đây</h4>
                                 <div class="card-body">
-
+                                    <table class="table table-bordered" id="table_diadiem">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Tên địa điểm</th>
+                                                <th>Người tạo</th>
+                                                <th>Ngày tạo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -83,75 +107,133 @@
                             <div class="card">
                                 <h4 class="card-header">Top bài viết được xem nhiều nhất</h4>
                                 <div class="card-body">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="table_luotxem">
                                         <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>URL</th>
-                                            <th>Lượt xem</th>
-                                        </tr>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>URL</th>
+                                                <th>Lượt xem</th>
+                                            </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                <a href="#">Bai 1</a>
-                                            </td>
-                                            <td>
-                                                88 lượt
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                                <a href="#">Bai 2</a>
-                                            </td>
-                                            <td>
-                                                12 lượt
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                3
-                                            </td>
-                                            <td>
-                                                <a href="#">Bai 3</a>
-                                            </td>
-                                            <td>
-                                                9 lượt
-                                            </td>
-                                        </tr>
-                                        </tbody>
+                                        <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
-                            <asp:GridView runat="server" ID="grTop"></asp:GridView>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <?php include './include/script.php' ?>
+    <?php include base_app('/admin/include/script.php') ?>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#table_diadiem").DataTable({
+                searching: false,
+                lengthChange: false,
+                sort: false,
+                bFilter: false,
+                bInfo: false,
+                bPaginate: false,
+                language: {
+                    "search": "Tìm kiếm",
+                    "lengthMenu": "Hiển thị <span style='margin-right: 10px'></span> _MENU_",
+                    "info": `Hiển thị <b>_TOTAL_</b> bản ghi`,
+                    "paginate": {
+                        "previous": "<i class='fa fa-arrow-left'></i>",
+                        "next": "<i class='fa fa-arrow-right'></i>",
+                    }
+                },
+                ajax: {
+                    url: "/api/diadiem/getData.php"
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'ten_dia_diem' },
+                    { data: 'nguoi_tao' },
+                    { data: 'ngay_tao' },
+                ],
+                columnDefs: [{
+                    targets: 1,
+                    render: function(data) {
+                        return `<a href="">${data}</a>`;
+                    }
+                }, {
+                    targets: 2,
+                    render: function(data) {
+                        return `<a href="">${data[0].ten_hien_thi}</a>`;
+                    }
+                }]
+            })
+            $("#table_luotxem").DataTable({
+                searching: false,
+                lengthChange: false,
+                sort: false,
+                bFilter: false,
+                bInfo: false,
+                bPaginate: false,
+                language: {
+                    "search": "Tìm kiếm",
+                    "lengthMenu": "Hiển thị <span style='margin-right: 10px'></span> _MENU_",
+                    "info": `Hiển thị <b>_TOTAL_</b> bản ghi`,
+                    "paginate": {
+                        "previous": "<i class='fa fa-arrow-left'></i>",
+                        "next": "<i class='fa fa-arrow-right'></i>",
+                    }
+                },
+                ajax: {
+                    url: "/api/diadiem/getData.php"
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'ten_dia_diem' },
+                    { data: 'luot_xem' },
+                ],
+                columnDefs: [{
+                    targets: 1,
+                    render: function(data) {
+                        return `<a>${data}</a>`
+                    }
+                }]
+            })
+        })
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script>
         $(document).ready(function () {
-            var xValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+            <?php
+                require_once base_app("Classes/GheTham.php");
+                $gheTham = new GheTham();
+                $result = $gheTham->all();
+                $ngaytaos = array_map(fn($item) => $item['ngay_tao'], $result);
+                $soluongs = array_map(fn($item) => $item['so_luong'], $result);
+                $soluongxemdiadiems = array_map(fn($item) => $item['so_luong_xem_dia_diem'], $result);
+
+                $ngaytaos = array_reverse($ngaytaos);
+                $soluongs = array_reverse($soluongs);
+                $soluongxemdiadiems = array_reverse($soluongxemdiadiems);
+
+                $js_ngaytao = json_encode($ngaytaos);
+                $js_soluong = json_encode($soluongs);
+                $js_soluongxemdiadiems = json_encode($soluongxemdiadiems);
+
+                echo "var xValues = " . $js_ngaytao . ";";
+                echo "var y1Value = " . $js_soluong . ";";
+                echo "var y2Value = " . $js_soluongxemdiadiems . ";";
+            ?>
             new Chart("myChart", {
                 type: "line",
                 data: {
                     labels: xValues,
                     datasets: [{
-                        data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
+                        data: y1Value,
                         borderColor: "red",
                         fill: false,
                         label: 'Khách ghé thăm'
                     }, {
-                        data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
+                        data: y2Value,
                         borderColor: "green",
                         fill: false,
                         label: 'Lượt xem'

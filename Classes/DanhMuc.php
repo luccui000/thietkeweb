@@ -31,8 +31,31 @@ class DanhMuc extends BaseModel implements RecursiveIterator
 
     public function all()
     {
-        $query = "select * from danhmuc";
-        return $this->conn->query($query);
+        $query = "select * from {$this->table}";
+        $result = $this->conn->query($query);
+        if($result->num_rows > 0) {
+            $rows = [];
+            while($row = $result->fetch_assoc()) {
+                array_push($rows, $row);
+            }
+            return $rows;
+        } else {
+            return [];
+        }
+    }
+    public function topDanhMuc()
+    {
+        $query = "select * from {$this->table} where danh_muc_cha is null order by thu_tu limit 4";
+        $result = $this->conn->query($query);
+        if($result->num_rows > 0) {
+            $rows = [];
+            while($row = $result->fetch_assoc()) {
+                array_push($rows, $row);
+            }
+            return $rows;
+        } else {
+            return [];
+        }
     }
     public function getTenDanhMuc()
     {
