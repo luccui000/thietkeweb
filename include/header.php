@@ -12,9 +12,10 @@
                 <li><a href="/diadiem.php">Điểm đến</a></li>
                 <li><a href="/lichtrinh.php">Lịch trình</a></li>
                 <li><a href="/lienhe.php">Liên hệ</a></li>
+
                 <?php
                     if(isset($_SESSION[SESSION_AUTH_NAME])) {
-                        echo "<li><a href=''>Xin chào, {$_SESSION[SESSION_AUTH_NAME]}</a></li>";
+                        echo "<li><a href='/dangxuat.php'>{$_SESSION[SESSION_AUTH_NAME]}, đăng xuất</a></li>";
                     } else {
                         echo "<li><a href='/dangnhap.php'>Đăng nhập</a></li>";
                     }

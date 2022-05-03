@@ -128,6 +128,9 @@ require_once "../../connect.php";
             }]
         })
         let detailRows = [];
+        $("table tbody").on('click', 'tr td:nth-child(2)', function() {
+            console.log(dt.row(this).data())
+        })
         $('table tbody').on( 'click', 'tr td.details-control', function () {
             var tr = $(this).closest('tr');
             var row = dt.row(tr);

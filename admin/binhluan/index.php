@@ -63,6 +63,7 @@ require_once "../../connect.php";
                                                                 <th>Người bình luận</th>
                                                                 <th>Nội dung bình luận</th>
                                                                 <th>Ngày tạo</th>
+                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -72,6 +73,11 @@ require_once "../../connect.php";
                                                                     <td><?php echo $item['noi_dung_binh_luan'] ?></td>
                                                                     <td><?php echo $item['nguoi_tao'][0]['ten_hien_thi'] ?></td>
                                                                     <td><?php echo DateFormat::format($item['ngay_tao']) ?></td>
+                                                                    <td>
+                                                                        <a href="/admin/binhluan/delete.php?id=<?php echo $item['id'] ?>" class="btn btn-danger btn-sm">
+                                                                            Xóa
+                                                                        </a>
+                                                                    </td>
                                                                 </tr>
                                                             <?php } ?>
                                                         </tbody>

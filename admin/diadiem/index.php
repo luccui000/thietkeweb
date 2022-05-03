@@ -65,7 +65,7 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(document).ready(function() {
-        $("table").DataTable({
+        let table = $("table").DataTable({
             language: {
                 "search": "Tìm kiếm",
                 "lengthMenu": "Hiển thị <span style='margin-right: 10px'></span> _MENU_",
@@ -98,9 +98,13 @@
                     return `<img width="100" src="${img}" >`
                 }
             }, {
+                targets: 2,
+                render: function(data) {
+                    return `<a href="#">${data}</a>`
+                }
+            }, {
                 targets: 5,
                 render: function (data) {
-                    console.log(data)
                     return `<span>${data[0].ten_hien_thi}</span>`;
                 }
             }, {
@@ -111,6 +115,10 @@
                         `<span class="badge badge-danger">đang tắt</span>`;
                 }
             }]
+        });
+        $('#table_diadiem tbody').on( 'click', 'tr td:nth-child(3)', function () {
+            const { id } = table.row( this ).data();
+            window.location.href = "/admin/diadiem/update.php?id=" + id;
         });
     })
 </script>
