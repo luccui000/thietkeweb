@@ -77,7 +77,39 @@
                                             <canvas id="myChart" style="width:100%;"></canvas>
                                         </div>
                                         <div class="col-6">
-
+                                            <?php
+                                                require_once base_app("Classes/BinhLuan.php");
+                                            $chuaduyet = (new BinhLuan())->danhSachBinhLuanTheo(BinhLuan::TRANGTHAI['dangchoduyet']);
+                                            ?>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Người bình luận</th>
+                                                    <th>Nội dung bình luận</th>
+                                                    <th>Ngày tạo</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php foreach ($chuaduyet as $item) { ?>
+                                                    <tr>
+                                                        <td><?php echo $item['id'] ?></td>
+                                                        <td><?php echo $item['noi_dung_binh_luan'] ?></td>
+                                                        <td><?php echo $item['nguoi_tao'][0]['ten_hien_thi'] ?></td>
+                                                        <td><?php echo DateFormat::format($item['ngay_tao']) ?></td>
+                                                        <td>
+                                                            <a href="/admin/binhluan/duyet.php?id=<?php echo $item['id'] ?>" class="btn btn-primary btn-sm">
+                                                                Duyệt
+                                                            </a>
+                                                            <a href="/admin/binhluan/delete.php?id=<?php echo $item['id'] ?>" class="btn btn-danger btn-sm">
+                                                                Xóa
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

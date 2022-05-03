@@ -4,6 +4,11 @@
     require_once base_app("Classes/TaiKhoan.php");
     require_once base_app("Classes/BinhLuan.php");
 
+    require_once base_app("Classes/GheTham.php");
+
+    $gheTham = new GheTham();
+    $gheTham->themTruyCapDiaDiem();
+
     if(!isset($_GET['id']))
         header("Location: /diadiem.php");
 
