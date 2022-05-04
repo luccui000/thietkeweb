@@ -5,6 +5,15 @@
     require_once base_app("Classes/BinhLuan.php");
 
     require_once base_app("Classes/GheTham.php");
+    require "vendor/autoload.php";
+    require "env.php";
+
+    $client = new Google_Client();
+    $client->setClientId(GOOGLE_APP_ID);
+    $client->setClientSecret(GOOGLE_APP_SECRET);
+    $client->setRedirectUri(GOOGLE_APP_CALLBACK_URL);
+    $client->addScope('email');
+    $client->addScope('profile');
 
     $gheTham = new GheTham();
     $gheTham->themTruyCapDiaDiem();
@@ -205,7 +214,7 @@
                     <button class="btn btn-submit" style="padding: 5px 30px;">Gửi</button>
                 </form>
                 <?php if(!isset($_SESSION[SESSION_IS_LOGIN_NAME])) {?>
-                    <span class="social-login">Hoặc đăng nhập bằng <a href=""><i class="fab fa-google"></i>oogle</a></span>
+                    <span class="social-login">Hoặc đăng nhập bằng <a href="<?php echo $client->createAuthUrl(); ?>"><i class="fab fa-google"></i>oogle</a></span>
                 <?php } ?>
             </div>
         </div>

@@ -66,11 +66,11 @@
                             ?>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email <span class="text-danger">*</span></label>
                             <input name="email" id="email" class="form-control" type="text">
                         </div>
                         <div class="form-group">
-                            <label for="so_dien_thoai">Số điện thoại <span class="text-danger">*</span></label>
+                            <label for="so_dien_thoai">Số điện thoại </label>
                             <input name="so_dien_thoai" id="so_dien_thoai" class="form-control" type="text">
                             <?php
                             if(isset($errorBags) && isset($errorBags['so_dien_thoai'])) {

@@ -67,7 +67,7 @@
                 <form action="/dangnhap.php" method="POST">
                     <h3>Đăng Nhập</h3>
                     <div class="form-group">
-                        <label for="email">Email/ Số điện thoại</label>
+                        <label for="email">Email</label>
                         <input name="email" id="email" class="form-control" type="text">
                         <?php
                             if(isset($errorBags) && isset($errorBags['email'])) {
